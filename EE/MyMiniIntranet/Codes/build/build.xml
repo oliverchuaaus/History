@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<project name="Mini Intranet" basedir=".." default="spring">
+	<target name="hibernate" description="Generates Hibernate class descriptor files.">
+		<!-- Define the hibernatedoclet task -->
+		<taskdef name="hibernatedoclet" classname="xdoclet.modules.hibernate.HibernateDocletTask">
+			<classpath>
+				<fileset dir="C:\Java\xdoclet-1.2.3\lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+
+		<hibernatedoclet destdir="JavaSource" verbose="false">
+			<fileset dir="JavaSource">
+				<include name="**/*.java" />
+			</fileset>
+			<hibernate version="3.0" />
+		</hibernatedoclet>
+	</target>
+
+	<target name="struts" description="Generates struts config files." depends="hibernate">
+		<taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask">
+			<classpath>
+				<fileset dir="C:\Java\xdoclet-1.2.3\lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="C:\Java\jakarta-tomcat-5.0.28\common\lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="./jars/struts">
+					<include name="*.jar" />
+				</fileset>				
+			</classpath>
+		</taskdef>
+		<webdoclet destdir="WebContent/WEB-INF" mergedir="merge" excludedtags="@version,@author" verbose="true">
+			<fileset dir="JavaSource">
+				<include name="**/*Form.java" />
+				<include name="**/*Action.java" />
+			</fileset>
+
+			<deploymentdescriptor validatexml="true" servletspec="2.3" sessiontimeout="60" distributable="false">
+			</deploymentdescriptor>
+			<strutsconfigxml validatexml="true" version="1.2" />
+			<strutsvalidationxml />
+		</webdoclet>
+	</target>
+
+	<target name="spring" description="Generates Spring files." depends="struts">
+		<taskdef name="springdoclet" classname="xdoclet.modules.spring.SpringDocletTask">
+			<classpath>
+				<fileset dir="C:\Java\xdoclet-1.2.3\lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+
+		<springdoclet destdir="props" verbose="false" mergeDir="merge">
+			<fileset dir="JavaSource">
+				<include name="**/*.java" />
+			</fileset>
+			<springxml />
+		</springdoclet>
+	</target>
+
+</project>

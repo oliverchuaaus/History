@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/pages/global/Template.xhtml">
+
+	<ui:define name="header">
+		#{unitProp.deleteUnit}
+	</ui:define>
+	<ui:define name="body">
+		<h:form id="form">
+			<h:panelGrid columns="1" styleClass="formTable">
+				<h:panelGroup>
+					<h:panelGrid columns="2" styleClass="formTable">
+
+						<h:outputText styleClass="formLabel" value="#{unitProp.unitName}" />
+						<h:outputText styleClass="formLabel"
+							value="#{unitDeleteBean.unit.unitName}" />
+
+						<h:outputText styleClass="formLabel" value="#{unitProp.superUnit}" />
+						<h:outputText styleClass="formLabel"
+							value="#{unitDeleteBean.unit.superUnit.unitName}" />
+					</h:panelGrid>
+				</h:panelGroup>
+
+				<h:messages styleClass="formFieldError" />
+
+				<h:commandButton action="#{unitDeleteBean.deleteUnit}"
+					value="#{unitProp.deleteUnit}" styleClass="formButton" />
+
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

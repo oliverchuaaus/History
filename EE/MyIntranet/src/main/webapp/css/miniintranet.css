@@ -1,0 +1,237 @@
+/*Spruce Theme*/
+
+/*Page*/
+.body {
+	background-color: #213F21;
+}
+
+.footer {
+	font-family: arial;
+	font-size: 10px;
+	color: #CFE2D8;
+	text-align: center;
+}
+
+.pageHeader {
+	font-family: arial;
+	font-size: 24px;
+	font-weight: bold;
+	color: White
+}
+
+.pageLink {
+	text-decoration: underline;
+	color: White;
+	font-family: arial;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+}
+
+A.pageLink:visited {
+	text-decoration: underline;
+	color: White;
+}
+
+A.pageLink:active {
+	text-decoration: underline;
+	color: White;
+}
+
+A.pageLink:hover {
+	text-decoration: underline;
+	color: Black;
+}
+
+.messageTable {
+	font-family: arial;
+	font-size: 12px;
+	background-color: #A2C8A9;
+	color: Black;
+}
+
+.messageHeading {
+	font-weight: bold;
+}
+
+/*Design*/
+.table1 {
+	width: 100%;
+	margin: 0px;
+	border-collapse: collapse;
+}
+
+.cell1 {
+	background-color: #5B9869;
+	height: 15px;
+}
+
+.cell2 {
+	background-color: #8C988F;
+	height: 50px;
+	font-family: arial;
+	font-size: 30px;
+	font-weight: bold;
+	color: Black;
+	text-align: center;
+}
+
+.cell3 {
+	background-color: #CFE2D8;
+	height: 5px;
+}
+
+/*Menu*/
+.menuTable {
+	background-color: Green;
+	padding: 15 em;
+}
+
+A.menuLink:link {
+	text-decoration: none;
+	color: White;
+	font-family: arial;
+	font-size: 14px;
+	align: center;
+}
+
+A.menuLink:visited {
+	text-decoration: none;
+	color: White;
+}
+
+A.menuLink:hover {
+	text-decoration: underline;
+	color: Black;
+}
+
+A.menuLink:active {
+	text-decoration: underline;
+	color: White;
+}
+
+
+
+.OnMainMenu {
+	background-color: #5B9869;
+}
+
+.OffMainMenu {
+	background-color: #8C988F;
+}
+
+.OnSubMenu {
+	background-color: #5B9869;
+}
+
+.OffSubMenu {
+	background-color: #8C988F;
+}
+
+/*Form*/
+.formTable {
+	font-family: arial;
+	font-size: 12px;
+	background-color: #A2C8A9;
+	color: Black;
+}
+
+.formLabel {
+	font-weight: bold;
+}
+
+.formField {
+	font-family: courier;
+	font-size: 12px;
+	background-color: #DEEBE0;
+	color: Black;
+}
+
+.formFieldError {
+	font-family: courier;
+	font-size: 12px;
+	color: Red;
+}
+
+.formComment {
+	font-style: italic;
+}
+
+.formButton {
+	font-family: arial;
+	font-size: 12px;
+	background-color: #5D8C5C;
+	color: White;
+}
+
+/*Results*/
+.resultsTable {
+	background-color: Black;
+	font-family: arial;
+	font-size: 14px;
+}
+
+.resultsHeader {
+	background-color: #A2C8A9;
+	text-align: center;
+}
+
+.resultsFooter {
+	background-color: #A2C8A9;
+	text-align: center;
+}
+
+.resultsEven {
+	background-color: #67A181;
+}
+
+.resultsOdd {
+	background-color: #92BCA5;
+}
+
+.resultsLink {
+	text-decoration: underline;
+	color: White;
+	text-align: center;
+	font-weight: bold;
+}
+
+A.resultsLink:visited {
+	text-decoration: underline;
+	color: White;
+}
+
+A.resultsLink:active {
+	text-decoration: underline;
+	color: White;
+}
+
+A.resultsLink:hover {
+	text-decoration: underline;
+	color: Black;
+}
+
+/*Pager*/
+.pagerLink {
+	text-decoration: underline;
+	color: White;
+	font-family: arial;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+}
+
+A.pagerLink:visited {
+	text-decoration: underline;
+	color: White;
+}
+
+A.pagerLink:active {
+	text-decoration: underline;
+	color: White;
+}
+
+A.pagerLink:hover {
+	text-decoration: underline;
+	color: Black;
+}

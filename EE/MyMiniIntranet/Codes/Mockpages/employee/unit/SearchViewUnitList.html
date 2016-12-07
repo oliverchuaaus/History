@@ -1,0 +1,72 @@
+<!DOCTYPE html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Intranet</TITLE>
+<LINK REL="stylesheet" HREF="../../css/miniintranet.css" />
+</HEAD>
+<BODY CLASS="body">
+<SPAN CLASS="pageHeader">Search/View Unit List</SPAN>
+<TABLE CLASS="formTable">
+	<TR>
+		<TD CLASS="formField"><INPUT TYPE="radio" NAME="searchType"
+			VALUE="SEARCH_BY_UNIT_SUBSTRING" CHECKED></TD>
+		<TD CLASS="formLabel">Unit Name</TD>
+		<TD><INPUT TYPE="text" CLASS="formField"><SPAN CLASS="formComment">(substring
+		search)</SPAN></TD>
+	</TR>
+	<TR>
+		<TD CLASS="formField"><INPUT TYPE="radio" NAME="searchType" VALUE="">
+		</TD>
+		<TD CLASS="formLabel">Super Unit</TD>
+		<TD><SELECT NAME="" CLASS="formField">
+			<OPTION SELECTED>All</OPTION>
+			<OPTION>None</OPTION>
+			<OPTION>Department</OPTION>
+			<OPTION>Position</OPTION>
+			<OPTION>Role</OPTION>
+		</SELECT></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="3" ALIGN="center"><INPUT TYPE="submit" NAME="search"
+			VALUE="Search" CLASS="formButton"></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="3" ALIGN="center"><A HREF="AddUnit.html" CLASS="pageLink">Add
+		New Unit</A></TD>
+	</TR>
+</TABLE>
+<BR />
+<TABLE CLASS="resultsTable">
+	<TR>
+		<TH COLSPAN="3" ALIGN="left" CLASS="resultsHeader">Units</TH>
+	</TR>
+	<TR CLASS="resultsEven">
+		<TD>ABS</TD>
+		<TD><A HREF="UpdateUnit.html" CLASS="resultsLink">Update</A></TD>
+		<TD><A HREF="DeleteUnit.html" CLASS="resultsLink">Delete</A></TD>
+	</TR>
+	<TR CLASS="resultsOdd">
+		<TD>ABS-BS</TD>
+		<TD><A HREF="UpdateUnit.html" CLASS="resultsLink">Update</A></TD>
+		<TD><A HREF="DeleteUnit.html" CLASS="resultsLink">Delete</A></TD>
+	</TR>
+	<TR CLASS="resultsEven">
+		<TD>Applications Designer/Developer</TD>
+		<TD><A HREF="UpdateUnit.html" CLASS="resultsLink">Update</A></TD>
+		<TD><A HREF="DeleteUnit.html" CLASS="resultsLink">Delete</A></TD>
+	</TR>
+	<TR CLASS="resultsOdd">
+		<TD>Macopa</TD>
+		<TD><A HREF="UpdateUnit.html" CLASS="resultsLink">Update</A></TD>
+		<TD><A HREF="DeleteUnit.html" CLASS="resultsLink">Delete</A></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="3"><A HREF="." CLASS="pagerLink">&lt;&lt; Previous</A>
+		<A HREF="." CLASS="pagerLink">11</A> <A HREF="." CLASS="pagerLink">12</A>
+		<A HREF="." CLASS="pagerLink">13</A> <A HREF="." CLASS="pagerLink">14</A>
+		<A HREF="." CLASS="pagerLink">15</A> <A HREF="." CLASS="pagerLink">Next
+		&gt;&gt;</A></TD>
+	</TR>
+</TABLE>
+</BODY>
+</HTML>

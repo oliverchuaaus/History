@@ -1,0 +1,163 @@
+MAVEN
+
+How to separately run integration tests?
+http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
+
+How to get latest version?
+[2.4,)
+http://stackoverflow.com/questions/30571/how-do-i-tell-maven-to-use-the-latest-version-of-a-dependency
+
+How to use properties?
+<springVersion>4.1.4.RELEASE<springVersion/>
+${springVersion}
+
+How to setup multi-module projects?
+parent pom:
+<modules>
+<module>childPom</module>
+</modules>
+
+child pom:
+<parent>parentPom</parent>
+
+overrwrite jdk version default 1.5
+
+
+How to share resources across modules?
+http://stackoverflow.com/questions/11774606/application-context-from-other-maven-module-cannot-be-loaded
+
+
+
+
+ECLIPSE
+
+Install eclipse plugin for gradle (up to eclipse kepler 4.3)
+http://marketplace.eclipse.org/content/gradle-integration-eclipse-37-43
+
+Where does Eclipse deploy web applications using WTP?
+http://stackoverflow.com/questions/2119351/where-does-eclipse-deploy-web-applications-using-wtp
+
+Tomcat in eclipse cannot find spring
+http://howtodoinjava.com/2014/05/14/solved-java-lang-classnotfoundexception-org-springframework-web-context-contextloaderlistener/
+
+how to preserve server.xml changes in between wtp server restarts?
+http://stackoverflow.com/questions/15815395/server-xml-changes-being-cleared-when-i-restart-tomcat-from-eclipse
+
+WTP Tomcat Datasource
+http://wiki.eclipse.org/WTP_Tomcat_FAQ#How_do_I_specify_the_Tomcat_context_configuration_for_my_Web_Application.3F
+
+
+
+
+TOMCAT
+Setup Tomcat JNDI datasource
+http://stackoverflow.com/questions/9183321/how-to-use-jndi-datasource-provided-by-tomcat-in-spring
+note: don't include last 2 parameters 
+
+how to enable SSL in Tomcat?
+http://www.mkyong.com/tomcat/how-to-configure-tomcat-to-support-ssl-or-https/
+
+need manager to lookup datasource and see if configured correctly
+How to login to manager
+http://www.mkyong.com/tomcat/tomcat-default-administrator-password/
+change manager role to manager-ui form tomcat 7
+
+how to upload and serve files
+http://stackoverflow.com/questions/1812244/simplest-way-to-serve-static-data-from-outside-the-application-server-in-a-java
+
+
+
+
+
+
+
+SPRING
+
+ctc errors for spring context xml
+http://forum.spring.io/forum/spring-projects/springsource-tool-suite/68894-errors-when-validating-spring-beans-2-5-xsd-from-sts
+
+Test not committing changes in JPA txn, so JdbcTemplate not seeing it.
+Reason was Test class was marked as @Transactional so will only commit after exiting test method.
+Solution is to remove @Transactional so commit happens after dao method and not test method
+http://simone-folino.blogspot.com.au/2012/06/spring-jdbctemplate.html 
+
+spring_security_login default login not showing
+http://stackoverflow.com/questions/6518270/spring-security-login-not-found
+
+method=delete gets translated to method=post in spring form output.
+http://spring.io/blog/2009/03/08/rest-in-spring-3-mvc
+
+How to unit test Spring via Mockito
+http://rdafbn.blogspot.com.au/2014/01/testing-spring-components-with-mockito.html
+
+when debugging in service layer, dao is not called straight, due to transaction manager aop.
+solution: put a breakpoint in the dao method you need to debug. 
+
+where to put @Transactional?
+in Service layer, not in dao layer
+http://stackoverflow.com/questions/1079114/spring-transactional-annotation-best-practice?lq=1
+
+
+
+
+
+
+VALIDATION
+
+How to add unit test for @Valid?
+https://docs.jboss.org/hibernate/validator/4.0.1/reference/en/html_single/#validator-usingvalidator-validationgroups
+
+exception thrown when calling validator.validate()
+Caused by: javax.validation.ValidationException: HV000183: Unable to load 'javax.el.ExpressionFactory'. Check that you have the EL dependencies on the classpath
+Reason is missing EL dependency
+http://stackoverflow.com/questions/24386771/javax-validation-validationexception-hv000183-unable-to-load-javax-el-express
+
+Difference between @NotNull and @Column(nullable = false)
+http://stackoverflow.com/questions/7439504/confusion-notnull-vs-columnnullable-false
+
+validation not working
+solution: add hibernate validator jar
+http://stackoverflow.com/questions/21478299/spring-mvc-form-validation-not-working
+
+
+
+
+
+
+
+
+
+
+GRADLE
+
+Workaround to solve create new hierarchical gradle project
+http://stackoverflow.com/questions/26085045/error-at-building-model-of-new-gradle-project-for-libgdx
+Use 2nd solution to set max mem for gradle in eclipse
+http://stackoverflow.com/questions/12585506/eclipse-gradle-sts-extension-could-not-reserve-enough-space-for-object-heap
+
+Gradle build fails due to java home
+https://issuetracker.springsource.com/browse/STS-2276
+In window> preferences>gradle>arguments, set to JRE
+
+How to get project A's xml from project B?
+solution: testCompile project(':prattle-domain-jpa').sourceSets.test.output
+http://stackoverflow.com/questions/5644011/multi-project-test-dependencies-with-gradle
+
+Could not find method providedCompile() for arguments
+solution: need to add war plugin
+http://stackoverflow.com/questions/13925724/providedcompile-without-war-plugin
+
+JSTL dependencies
+https://weblogs.java.net/blog/manningpubs/archive/2013/03/18/building-java-web-application-gradle
+
+Gradle import fails.
+Cannot find System Java Compiler. Ensure that you have installed a JDK (not just a JRE) and configured your JAVA_HOME system variable to point to the according directory.
+Could not execute build using Gradle distribution 'https://services.gradle.org/distributions/gradle-2.1-bin.zip'.
+solution: https://www.ngxo.com/thread/16913397
+Answer #2. Set window>preferences>gradle>arguments>workspace jre
+
+
+
+
+
+

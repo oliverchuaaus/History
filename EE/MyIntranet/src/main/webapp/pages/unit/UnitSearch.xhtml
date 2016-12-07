@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/pages/global/Template.xhtml">
+
+	<ui:define name="header">
+		#{unitProp.searchTitle}
+	</ui:define>
+
+	<ui:define name="body">
+
+		<h:form>
+			<h:panelGrid columns="1" styleClass="formTable">
+				<h:panelGroup>
+					<h:panelGrid columns="2" styleClass="formTable">
+						<h:selectOneRadio styleClass="formLabel"
+							value="#{unitSearchBean.unitSearchDto.unitSearchType}"
+							layout="pageDirection">
+							<f:selectItems value="#{unitSearchBean.unitSearchTypes}"
+								styleClass="formField" />
+						</h:selectOneRadio>
+
+						<h:panelGroup>
+							<h:inputText
+								value="#{unitSearchBean.unitSearchDto.unitSubstring}"
+								styleClass="formField" />
+							<h:outputText styleClass="formComment"
+								value="#{unitProp.substring}" />
+							<f:verbatim>&lt;BR/&gt;</f:verbatim>
+							<h:selectOneMenu
+								value="#{unitSearchBean.unitSearchDto.superUnit}"
+								converter="unitConverter" styleClass="formField">
+								<f:selectItems id="superUnit" value="#{unitCommonBean.unitList}" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:panelGroup layout="block" style="text-align:center">
+					<h:commandButton action="#{unitSearchBean.searchUnit}"
+						value="#{unitProp.searchButton}" styleClass="formButton" />
+
+					<f:verbatim>&lt;BR/&gt;</f:verbatim>
+
+					<h:link outcome="UnitAdd.xhtml" styleClass="pageLink">#{unitProp.addUnit}</h:link>
+				</h:panelGroup>
+			</h:panelGrid>
+
+
+			<f:verbatim>&lt;BR/&gt;</f:verbatim>
+
+			<h:dataTable binding="#{unitSearchBean.unitTable}" var="unit" value="#{unitSearchBean.unitSearchList}"
+				styleClass="resultsTable" rowClasses="resultsEven,resultsOdd"
+				headerClass="resultsHeader" footerClass="resultsFooter"
+				rendered="#{fn:length(unitSearchBean.unitSearchList) gt 0}">
+				<f:facet name="header">#{unitProp.header}</f:facet>
+				<h:column>#{unit.unitName}</h:column>
+				<h:column>
+					<h:commandLink styleClass="pageLink"
+						action="#{unitUpdateBean.loadUnit}" value="#{unitProp.updateUnit}">
+						<f:param name="unitCode" value="#{unit.unitCode}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<h:commandLink styleClass="pageLink"
+						action="#{unitDeleteBean.loadUnit}" value="#{unitProp.deleteUnit}">
+						<f:param name="unitCode" value="#{unit.unitCode}" />
+					</h:commandLink>
+				</h:column>
+
+				<f:facet name="footer">
+
+					<h:commandLink action="#{unitSearchBean.searchUnit}"
+						value="Previous" styleClass="pagerLink"
+						disabled="#{unitSearchBean.unitSearchDto.firstResult eq 0}">
+						<f:param name="firstResult"
+							value="#{unitSearchBean.unitSearchDto.firstResult-unitSearchBean.unitSearchDto.maxResults}" />
+					</h:commandLink>
+
+					<h:outputText style="text-align:left"
+						value=" (#{unitSearchBean.unitSearchDto.firstResult+1}
+			to #{
+			unitSearchBean.unitSearchDto.firstResult + unitSearchBean.unitSearchDto.maxResults lt unitSearchBean.recordCount 
+			? unitSearchBean.unitSearchDto.firstResult + unitSearchBean.unitSearchDto.maxResults
+			: unitSearchBean.recordCount}) 
+			of #{unitSearchBean.recordCount} " />
+
+					<h:commandLink action="#{unitSearchBean.searchUnit}" value="Next"
+						styleClass="pagerLink"
+						disabled="#{unitSearchBean.unitSearchDto.firstResult + unitSearchBean.unitSearchDto.maxResults ge unitSearchBean.recordCount}">
+						<f:attribute name="unitSearchDto"
+							value="#{unitSearchBean.unitSearchDto}" />
+					</h:commandLink>
+				</f:facet>
+
+			</h:dataTable>
+		</h:form>
+
+	</ui:define>
+	
+</ui:composition>

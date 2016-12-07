@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+  <!--
+    Define global validation config in validation-global.xml
+  -->
+  <formset>
+  <!--
+    Define form validation config in validation-forms.xml
+  -->
+
+      <form name="UpdateUnitForm">
+              <field property="unitName"
+                     depends="required">
+                  <msg
+                    name="required"
+                    key="errors.required"/>
+
+                  <arg0 key="UpdateUnitForm.unitName"/>
+              </field>
+      </form>
+      <form name="AddUnitForm">
+              <field property="unitName"
+                     depends="required">
+                  <msg
+                    name="required"
+                    key="errors.required"/>
+
+                  <arg0 key="AddUnitForm.unitName"/>
+              </field>
+      </form>
+      <form name="DeleteUnitForm">
+              <field property="unitName"
+                     depends="required">
+                  <msg
+                    name="required"
+                    key="errors.required"/>
+
+                  <arg0 key="DeleteUnitForm.unitName"/>
+              </field>
+      </form>
+  </formset>
+</form-validation>

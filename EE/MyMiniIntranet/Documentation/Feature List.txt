@@ -1,0 +1,33 @@
+1. Paging
+2. Internationalization
+3. CSS 
+	show how easy to change overall style
+	odd even coloring of table cell
+	style for links
+	on off menu
+4. Triple DES encryption for password
+5. 
+
+
+
+Technical
+1. Struts
+DispatchAction
+PRG design pattern (not important)
+Validation
+	Javascript Validation
+	Validator Framework
+	Custom Validation 
+
+2. Hibernate
+Pagination
+One to Many
+	Set, with sorting
+Many to One
+
+
+3. Spring
+
+4. Unit and Functional Testing
+Automated Regression Testing
+Database Testing

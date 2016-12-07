@@ -1,0 +1,70 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="jpasandbox">
+		<class>association.manytomany.bi.ManyA</class>
+		<class>association.manytomany.bi.ManyB</class>
+		<class>association.manytomany.uni.ManyAUni</class>
+		<class>association.manytomany.uni.ManyBUni</class>
+		<class>association.onetomany.elementcollection.OneElementCollection</class>
+		<class>association.onetomany.elementcollection.OneEmbeddableElementCollection</class>
+		<class>association.onetomany.elementcollection.ManyEmbeddableElementCollection</class>
+		<class>association.onetomany.aggregate.ManyAggregate</class>
+		<class>association.onetomany.aggregate.OneAggregate</class>
+		<class>association.onetomany.jointable.ManyJoinTable</class>
+		<class>association.onetomany.jointable.OneJoinTable</class>
+		<class>association.onetomany.list.ManyList</class>
+		<class>association.onetomany.list.OneList</class>
+		<class>association.onetomany.map.ManyMap</class>
+		<class>association.onetomany.map.OneMap</class>
+		<class>association.onetomany.set.ManySet</class>
+		<class>association.onetomany.set.OneSet</class>
+		<class>association.onetomany.uni.ManyUni</class>
+		<class>association.onetomany.uni.OneUni</class>
+		<class>association.onetoone.joincolumn.EntityE</class>
+		<class>association.onetoone.joincolumn.EntityF</class>
+		<class>association.onetoone.jointable.EntityX</class>
+		<class>association.onetoone.jointable.EntityY</class>
+		<class>association.onetoone.sharedpk.EntityA</class>
+		<class>association.onetoone.sharedpk.EntityB</class>
+		<class>association.secondary.SecondaryTableEntity</class>
+		<class>individual.embedabble.EmbedabbleObject1</class>
+		<class>individual.embedabble.EmbedabbleObject2</class>
+		<class>individual.embedabble.EntityEmbedabble</class>
+		<class>individual.simple.SimpleEntity</class>
+		<class>individual.simple.enums.EnumEntity</class>
+		<class>individual.simple.locking.LockingEntity</class>
+		<class>individual.simple.locking.NonLockingEntity</class>
+		<class>inheritance.JoinedChild1</class>
+		<class>inheritance.JoinedChild2</class>
+		<class>inheritance.JoinedParent</class>
+		<class>inheritance.MappedSuperClassEntity</class>
+		<class>inheritance.SingleTableParent</class>
+		<class>inheritance.SingleTableChild1</class>
+		<class>inheritance.SingleTableChild2</class>
+		<class>inheritance.TablePerClassParent</class>
+		<class>inheritance.TablePerClassChild1</class>
+		<class>inheritance.TablePerClassChild2</class>
+		<class>jpql.League</class>
+		<class>jpql.Player</class>
+		<class>jpql.Team</class>
+		<class>pk.composite.EmbeddedIdPK</class>
+		<class>pk.composite.EmbeddedIdPKEntity</class>
+		<class>pk.composite.IdClassPKEntity</class>
+		<class>pk.composite.ManyToOneEntity</class>
+		<class>pk.simple.EntityAutoPK</class>
+		<class>pk.simple.EntityManualPK</class>
+		<class>pk.simple.EntitySequencePK</class>
+		<class>pk.composite.ManyToOneMobile</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+			<property name="javax.persistence.jdbc.user" value="jpasandbox" />
+			<property name="javax.persistence.jdbc.password" value="jpasandbox" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.archive.autodetection" value="class" />
+		</properties>
+	</persistence-unit>
+</persistence>

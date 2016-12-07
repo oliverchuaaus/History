@@ -1,0 +1,3 @@
+Sortable tables
+collapsible pictures
+voting section

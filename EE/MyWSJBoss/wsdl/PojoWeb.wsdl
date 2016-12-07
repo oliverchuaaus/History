@@ -1,0 +1,37 @@
+<wsdl:definitions name="PojoWebService"
+	targetNamespace="http://entity/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://entity/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:message name="echoResponse">
+		<wsdl:part name="return" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="echo">
+		<wsdl:part name="arg0" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:portType name="PojoWeb">
+		<wsdl:operation name="echo">
+			<wsdl:input message="tns:echo" name="echo" />
+			<wsdl:output message="tns:echoResponse" name="echoResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="PojoWebServiceSoapBinding" type="tns:PojoWeb">
+		<soap:binding style="rpc"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="echo">
+			<soap:operation soapAction="" style="rpc" />
+			<wsdl:input name="echo">
+				<soap:body namespace="http://entity/" use="literal" />
+			</wsdl:input>
+			<wsdl:output name="echoResponse">
+				<soap:body namespace="http://entity/" use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="PojoWebService">
+		<wsdl:port binding="tns:PojoWebServiceSoapBinding" name="PojoWebPort">
+			<soap:address location="http://localhost:8080/MyWSWeb" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

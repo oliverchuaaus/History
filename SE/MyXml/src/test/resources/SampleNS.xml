@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rootElement xmlns="http://kristoffer.org/ns/MyNameSpace1"
+	xmlns:myns2="http://kristoffer.org/ns/MyNameSpace2">
+	Text rootElement
+	<element1 attribute1="element1AttributeValue1" attribute2="element1AttributeValue2">
+		Text 1
+</element1>
+	<myns2:element1 attribute1="element2AttributeValue1"
+		attribute2="element2AttributeValue2">
+		Text 2
+</myns2:element1>
+</rootElement>

@@ -1,0 +1,40 @@
+In WSDL, how do we specify date format?	
+How do we implement security?
+How to implement ws session/conversation?
+How do we implement different versions in parallel?	
+
+how to use maven to generate stubs and skeleton?	
+pom.xml:
+http://geertschuring.wordpress.com/2009/06/26/how-to-create-a-webservice-client-with-maven-and-jax-ws/
+param reference:
+http://jax-ws-commons.java.net/jaxws-maven-plugin/wsimport-mojo.html
+how to use maven to generate files from WSDL?	
+
+How to convert Date to XmlGregorianCalendar?	
+GregorianCalendar c = new GregorianCalendar(); 
+c.setTime(yourDate); 
+XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar()
+
+How to convert XmlGregorianCalendar to Date?	
+XMLGregorianCalendar xcal = <assume this is initialized>; 
+java.util.Date dt = xcal.toGregorianCalendar().getTime(); 
+http://stackoverflow.com/questions/835889/java-util-date-to-xmlgregoriancalendar
+
+How to convert DataHandler to Byte array?	
+http://stackoverflow.com/questions/4671625/converting-datahandler-to-byte
+
+How to use Maven to generate wsdl for client or generate classes from wsdl?
+http://stackoverflow.com/questions/2158175/use-maven-to-trigger-a-wsgen-wsimport-in-a-row-using-wsdllocation
+
+* - TODO
+Tasks:
+1. Bottom up echo method that accepts a string and returns the string param concatenated with an additional string.
+2. Create ejb version
+3. Echo method for all the different types supported except streams (Source, Image, DataHandler).
+4. Echo method for byte[]
+*5. Echo method for streams (Source, Image, DataHandler).
+*6. Top down echo method using wsdl from previous tasks.
+7. Top down echo method using wsdl from previous tasks using JBoss wsconsume.
+*8. Implement WS security
+*9. Implement session/conversation
+*10. Implement versioning

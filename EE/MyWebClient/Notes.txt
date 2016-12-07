@@ -1,0 +1,17 @@
+Tasks:
+
+1. MyWeb - simple webapp with maven
+2. MyWebSpringMVC
+source: http://www.mkyong.com/spring3/spring-3-mvc-hello-world-example/
+3. MyWebStruts
+4. MyWebJSF
+
+Form submission
+validation error
+table reports
+
+To create maven webapp:
+a. create new maven project
+b. choose maven-archetype-webapp
+c. to deploy, run maven install
+d. add project to server.
