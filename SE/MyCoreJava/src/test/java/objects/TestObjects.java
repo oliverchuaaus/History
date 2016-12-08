@@ -69,5 +69,5 @@ public class TestObjects {
 		assertEquals("address", objects.getAddress());
 	}
 
-	// TODO NIO,io, threads, reflection, inner class, design patterns
+	// TODO NIO,io, threads, reflection, inner class
 }

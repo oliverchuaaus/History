@@ -4,16 +4,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import individual.simple.locking.LockingEntity;
-import individual.simple.locking.NonLockingEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
+import individual.simple.locking.LockingEntity;
+import individual.simple.locking.NonLockingEntity;
 import util.JPAUtil;
 /*
  * OPTIMISTIC - The Entity will have its optimistic lock version checked on commit, 
@@ -298,8 +297,6 @@ public class LockingModeTest  {
 	// Pessimistic Locking throws exception during lock method call when object
 	// is stale
 	@Test
-	@Ignore
-	//TODO Fix Test
 	public void testLockingPessimisticLockLoad() {
 		LockingEntity e1 = new LockingEntity();
 		e1.setStringField("string 1");
@@ -317,6 +314,7 @@ public class LockingModeTest  {
 		e2.setStringField("string 2");
 
 		EntityManager em2 = JPAUtil.getEm();
+		em2.getTransaction().begin();
 		LockingEntity e3 = (LockingEntity) em2.find(LockingEntity.class,
 				e1.getId(), LockModeType.OPTIMISTIC);
 		assertNotNull(e3);
@@ -330,7 +328,6 @@ public class LockingModeTest  {
 		em.getTransaction().commit();
 
 		// 2nd txn to update
-		em2.getTransaction().begin();
 		try {
 			em2.getTransaction().commit();
 			// exception thrown during lock, even before commit

@@ -29,6 +29,8 @@ public class SimpleEntity {
 	private String stringField;
 
 	// use property access instead of property
+	@Access(AccessType.PROPERTY)
+	@Column(length = 6)
 	private String stringFieldLength;
 
 	@Temporal(TemporalType.TIME)
@@ -85,8 +87,6 @@ public class SimpleEntity {
 		this.stringField = stringField;
 	}
 
-	@Access(AccessType.PROPERTY)
-	@Column(length = 6)
 	public String getStringFieldLength() {
 		return stringFieldLength;
 	}

@@ -9,7 +9,6 @@ public class MovieNight {
 		Collections.sort(al, new Comparator<Movie>() {
 			@Override
 			public int compare(Movie o1, Movie o2) {
-				// TODO Auto-generated method stub
 				if (o1.getStart()==null){
 					return -1;
 				}

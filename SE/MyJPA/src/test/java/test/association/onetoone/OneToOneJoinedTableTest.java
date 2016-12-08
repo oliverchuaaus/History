@@ -1,19 +1,18 @@
 package test.association.onetoone;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import util.JPAUtil;
 import association.onetoone.jointable.EntityX;
 import association.onetoone.jointable.EntityY;
+import util.JPAUtil;
 
 public class OneToOneJoinedTableTest {
 	@Test
@@ -48,8 +47,6 @@ public class OneToOneJoinedTableTest {
 	}
 
 	@Test
-	@Ignore
-	//TODO Fix test
 	public void testBadJoinedTableNullX() {
 		EntityManager em = JPAUtil.getEm();
 		em.getTransaction().begin();
@@ -58,8 +55,9 @@ public class OneToOneJoinedTableTest {
 		try {
 			em.persist(entityY);
 			em.getTransaction().commit();
-		} catch (Exception e) {
 			fail();
+		} catch (Exception e) {
+			assertTrue(e.getMessage().contains("not-null property references a null or transient value"));
 		}
 	}
 

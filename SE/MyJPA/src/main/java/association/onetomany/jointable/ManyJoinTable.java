@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "OneToMany_JoinTable_Many")
@@ -14,8 +12,7 @@ public class ManyJoinTable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToOne
-	@JoinTable(name = "OneToMany_JoinTable_OneMany", joinColumns = { @JoinColumn(name = "MANY_ID", insertable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ONE_ID", insertable = false, updatable = false) })
+	@ManyToOne()
 	private OneJoinTable one;
 
 	private String manyField;

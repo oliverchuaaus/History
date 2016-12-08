@@ -21,6 +21,7 @@ public class OneToManyJoinTableTest  {
 		em.getTransaction().begin();
 
 		OneJoinTable one = new OneJoinTable();
+		em.persist(one);
 
 		ManyJoinTable many = new ManyJoinTable();
 		many.setManyField("Number 1");
@@ -34,7 +35,6 @@ public class OneToManyJoinTableTest  {
 		one.getMany().add(many);
 		em.persist(many);
 
-		em.persist(one);
 		em.getTransaction().commit();
 
 		oneArray[0] = one;
