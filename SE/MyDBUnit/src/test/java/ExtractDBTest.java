@@ -9,28 +9,30 @@ import org.junit.Test;
  * This is the ExtractDB class.
  */
 public class ExtractDBTest {
+	private static final String RESOURCE = ".output";
+
 	@Test
 	public void testExtract() throws Exception {
 		// database connection
 		IDatabaseConnection connection = DBUnitUtility.getConnection();
 		// NOTE case sensitive table names, from jpasandbox schema
 		// table export
-		File f = new File(".output");
-		if (!f.exists()){
-			f.mkdir();
-		}
+		
+		File output = new File(RESOURCE);
+		output.mkdir();
+		
 		DBUnitUtility.tableExport(connection, "INDIVIDUAL_SIMPLE_ENTITY",
-				".output/table.xml");
+				RESOURCE +"/table.xml");
 		// all tables export
-		DBUnitUtility.allTablesExport(connection, ".output/allTables.xml");
+		DBUnitUtility.allTablesExport(connection, RESOURCE+ "/allTables.xml");
 		// dependent export
 		DBUnitUtility.dependentTablesExport(connection, "ONETOMANY_LIST_ONE",
-				".output/dependentTables.xml");
+				RESOURCE +"/dependentTables.xml");
 	}
 
 	public void testPopulate() throws Exception {
 		// database connection
 		IDatabaseConnection connection = DBUnitUtility.getConnection();
-		DBUnitUtility.populateTable(connection, ".output/dependentTables.xml");
+		DBUnitUtility.populateTable(connection, RESOURCE +"/dependentTables.xml");
 	}
 }

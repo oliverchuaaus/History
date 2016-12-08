@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class TestSerializableTransient {
 	private static final String SOURCE = "src/test/resources/serialization/";
-	private static final String RESOURCE = "output/serialization/";
+	private static final String RESOURCE = ".output/serialization/";
 
 	@Test
 	public void testSerializeNoTransient() throws IOException {

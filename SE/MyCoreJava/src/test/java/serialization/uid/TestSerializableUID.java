@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 import org.junit.Test;
 
 public class TestSerializableUID {
-	private static final String RESOURCE = "output/serialization/";
+	private static final String RESOURCE = ".output/serialization/";
 
 	@Test
 	public void testSerializeSimple() throws IOException {

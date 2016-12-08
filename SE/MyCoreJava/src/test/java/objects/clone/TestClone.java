@@ -3,6 +3,7 @@ package objects.clone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import org.junit.Test;
 import serialization.transients.SerializableWithTransientObject;
 
 public class TestClone {
-	private static final String RESOURCE = "output/serialization/";
+	private static final String RESOURCE = ".output/serialization/";
 
 	@Test
 	public void testClone() {
@@ -100,13 +101,14 @@ public class TestClone {
 	}
 
 	@Test
-	public void testCloneUsingSerialization() throws IOException,
-			ClassNotFoundException {
+	public void testCloneUsingSerialization() throws IOException, ClassNotFoundException {
 		SerializableWithTransientObject so = new SerializableWithTransientObject();
 		so.setField1("field1");
 
-		FileOutputStream fos = new FileOutputStream(RESOURCE
-				+ "CloneSerializableObject.ser");
+		File f = new File(RESOURCE);
+		f.mkdirs();
+
+		FileOutputStream fos = new FileOutputStream(RESOURCE + "CloneSerializableObject.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		try {
 			oos.writeObject(so);
@@ -114,12 +116,10 @@ public class TestClone {
 			oos.close();
 		}
 		so.setField1("field2");
-		FileInputStream fis = new FileInputStream(RESOURCE
-				+ "CloneSerializableObject.ser");
+		FileInputStream fis = new FileInputStream(RESOURCE + "CloneSerializableObject.ser");
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		try {
-			SerializableWithTransientObject so2 = (SerializableWithTransientObject) ois
-					.readObject();
+			SerializableWithTransientObject so2 = (SerializableWithTransientObject) ois.readObject();
 			assertEquals("field1", so2.getField1());
 		} finally {
 			ois.close();

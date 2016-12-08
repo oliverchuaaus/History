@@ -16,15 +16,17 @@ import org.junit.Test;
 
 public class TestSerializable {
 	private static final String SOURCE = "src/test/resources/serialization/";
-	private static final String RESOURCE = "output/serialization/";
+	private static final String RESOURCE = ".output/serialization/";
 
 	@Test
 	public void testSerializeDeserializeSimple() throws IOException,
 			ClassNotFoundException {
 		SerializableObject so = new SerializableObject();
 		so.setField1("field1");
+		
 		File f = new File(RESOURCE);
 		f.mkdirs();
+		
 		FileOutputStream fos = new FileOutputStream(RESOURCE
 				+ "SerializableObject.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);

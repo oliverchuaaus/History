@@ -24,7 +24,7 @@ public class ChromeTest extends TestCase {
   @BeforeClass
   public static void createAndStartService() throws IOException {
     service = new ChromeDriverService.Builder()
-        .usingDriverExecutable(new File("c:\\chromedriver.exe"))
+        .usingDriverExecutable(new File("chromedriver.exe"))
         .usingAnyFreePort()
         .build();
     service.start();

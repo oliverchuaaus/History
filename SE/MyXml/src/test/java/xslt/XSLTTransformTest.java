@@ -9,6 +9,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Test;
 
 public class XSLTTransformTest  {
+	private static final String RESOURCE = ".output";
 
 	@Test
 	public void testXSLTTransformer() throws TransformerException {
@@ -17,10 +18,11 @@ public class XSLTTransformTest  {
 		StreamSource xsl = new StreamSource(new File(
 				"src/test/resources/Sample.xsl"));
 		
-		File output = new File("output");
-		output.mkdir();
+		File output = new File(RESOURCE);
+		output.mkdirs();
+		
 		StreamResult result = new StreamResult(new File(
-				"output/SampleOutput.xml"));
+				RESOURCE + "/SampleOutput.xml"));
 
 		XSLTTransformer transformer = new XSLTTransformer();
 		transformer.transform(xml, xsl, result);
