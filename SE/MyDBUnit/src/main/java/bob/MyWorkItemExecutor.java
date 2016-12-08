@@ -21,7 +21,7 @@ public class MyWorkItemExecutor implements WorkItemExecutor,
 	public void executeWorkItem(WorkItem w, int parallelism) {
 		System.out.println("Start working, threads : " + parallelism);
 		executorService = Executors.newFixedThreadPool(parallelism);
-		Future[] f = new Future[parallelism];
+		Future<?>[] f = new Future<?>[parallelism];
 		for (int i = 0; i < parallelism; i++) {
 			f[i] = executorService.submit(new WorkItemCallable(w, this));
 		}

@@ -1,5 +1,7 @@
 // KAZ Technology Services Pty Ltd (c) 2005
 
+import java.io.File;
+
 import org.dbunit.database.IDatabaseConnection;
 import org.junit.Test;
 
@@ -13,18 +15,22 @@ public class ExtractDBTest {
 		IDatabaseConnection connection = DBUnitUtility.getConnection();
 		// NOTE case sensitive table names, from jpasandbox schema
 		// table export
+		File f = new File(".output");
+		if (!f.exists()){
+			f.mkdir();
+		}
 		DBUnitUtility.tableExport(connection, "INDIVIDUAL_SIMPLE_ENTITY",
-				"output/table.xml");
+				".output/table.xml");
 		// all tables export
-		DBUnitUtility.allTablesExport(connection, "output/allTables.xml");
+		DBUnitUtility.allTablesExport(connection, ".output/allTables.xml");
 		// dependent export
 		DBUnitUtility.dependentTablesExport(connection, "ONETOMANY_LIST_ONE",
-				"output/dependentTables.xml");
+				".output/dependentTables.xml");
 	}
 
 	public void testPopulate() throws Exception {
 		// database connection
 		IDatabaseConnection connection = DBUnitUtility.getConnection();
-		DBUnitUtility.populateTable(connection, "output/dependentTables.xml");
+		DBUnitUtility.populateTable(connection, ".output/dependentTables.xml");
 	}
 }
