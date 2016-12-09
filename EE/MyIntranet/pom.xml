@@ -25,16 +25,6 @@
 	<build>
 
 		<plugins>
-			<!-- Set compiler version -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
 			<!-- Tomcat deployment -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -95,8 +85,8 @@
 				<dependencies>
 					<dependency>
 						<groupId>com.oracle</groupId>
-						<artifactId>ojdbc14</artifactId>
-						<version>10.2.0.2.0</version>
+						<artifactId>ojdbc6</artifactId>
+						<version>11.2.0</version>
 					</dependency>
 				</dependencies>
 				<configuration>
@@ -127,10 +117,45 @@
 			<!-- For sql-maven-plugin sql execution -->
 			<extension>
 				<groupId>com.oracle</groupId>
-				<artifactId>ojdbc14</artifactId>
-				<version>10.2.0.2.0</version>
+				<artifactId>ojdbc6</artifactId>
+				<version>11.2.0</version>
 			</extension>
 		</extensions>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											sql-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.4,)
+										</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<pluginRepositories>
 		<pluginRepository>
@@ -143,8 +168,8 @@
 		<!--Oracle 10 -->
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>10.2.0.2.0</version>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
 		</dependency>
 		<!--Hibernate 3.0 -->
 		<dependency>

@@ -61,7 +61,7 @@ public class UnitSearchBean implements Serializable {
 	FacesContext ctx = FacesContext.getCurrentInstance();
 	Map<String, Object> map = ctx.getExternalContext()
 			.getRequestMap();
-	UnitSearchDto dto = (UnitSearchDto)map.get("unitSearchDto");
+	unitSearchDto = (UnitSearchDto)map.get("unitSearchDto");
 	
 	
 	String firstResult = JSFUtil.getParameter("firstResult");

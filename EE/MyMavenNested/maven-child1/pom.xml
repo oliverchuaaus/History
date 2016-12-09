@@ -6,10 +6,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.kristoffer.component</groupId>
 	<artifactId>maven-child1</artifactId>
 	<name>maven-child1</name>
-	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
