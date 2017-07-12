@@ -29,7 +29,7 @@ public class MyServiceTest {
 			SpringUtil.getBean("MyServiceImpl");
 			fail();
 		} catch (NoSuchBeanDefinitionException e) {
-			assertEquals("No bean named 'MyServiceImpl' is defined",
+			assertEquals("No bean named 'MyServiceImpl' available",
 					e.getMessage());
 		} catch (Exception e) {
 			fail();
@@ -50,7 +50,7 @@ public class MyServiceTest {
 			SpringUtil.getBeanByClass(MyOtherService.class);
 		} catch (NoSuchBeanDefinitionException e) {
 			assertEquals(
-					"No qualifying bean of type [org.kristoffer.service.MyOtherService] is defined: expected single matching bean but found 2: myOtherServiceImpl,myDummyServiceImpl",
+					"No qualifying bean of type 'org.kristoffer.service.MyOtherService' available: expected single matching bean but found 2: myDummyServiceImpl,myOtherServiceImpl",
 					e.getMessage());
 		} catch (Exception e) {
 			fail();

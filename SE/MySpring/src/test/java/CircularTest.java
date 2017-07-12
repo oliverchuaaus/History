@@ -19,7 +19,7 @@ public class CircularTest {
 			fail("Expected exception not thrown.");
 		} catch (NoSuchBeanDefinitionException e) {
 			assertTrue(e.getMessage().contains(
-					"No bean named 'beanA' is defined"));
+					"No bean named 'beanA' available"));
 		}
 	}
 

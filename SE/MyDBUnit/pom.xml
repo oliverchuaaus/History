@@ -25,8 +25,8 @@
 				<dependencies>
 					<dependency>
 						<groupId>com.oracle</groupId>
-						<artifactId>ojdbc14</artifactId>
-						<version>10.2.0.0</version>
+						<artifactId>ojdbc</artifactId>
+						<version>11.2.0</version>
 					</dependency>
 				</dependencies>
 
@@ -70,7 +70,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
+			<artifactId>ojdbc</artifactId>
 			<version>11.2.0</version>
 		</dependency>
 		<dependency>

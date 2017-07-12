@@ -20,7 +20,7 @@ public class EntityY implements Serializable {
 	 * This will function as a composition. EntityY cannot stand by itself
 	 * (create EntityY with null EntityX) but EntityX can.
 	 */
-	@OneToOne(mappedBy = "entityY")
+	@OneToOne(mappedBy = "entityY",optional=false)
 	private EntityX entityX;
 
 	public Long getId() {
