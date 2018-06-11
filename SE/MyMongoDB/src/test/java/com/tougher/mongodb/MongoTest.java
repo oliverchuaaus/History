@@ -5,14 +5,14 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+
+import junit.framework.TestCase;
 
 /**
  * Unit test for simple App.
@@ -55,6 +55,7 @@ public class MongoTest extends TestCase {
 		System.out.println("\n");
 	}
 
+	@SuppressWarnings("deprecation")
 	public void testCreate() throws UnknownHostException {
 		MongoClient mongo = new MongoClient("localhost", 27017);
 		DB db = mongo.getDB("mongo-test");
