@@ -49,9 +49,8 @@ public class MockitoTest {
 
 	// this test demonstrates how to return values independent of the input
 	// value
-
 	@Test
-	public void testReturnValueInDependentOnMethodParameter() {
+	public void testReturnValueIndependentOfMethodParameter() {
 		@SuppressWarnings("unchecked")
 		Comparable<Integer> c = mock(Comparable.class);
 		when(c.compareTo(anyInt())).thenReturn(-1);
@@ -60,9 +59,8 @@ public class MockitoTest {
 	}
 
 	// return a value based on the type of the provide parameter
-
 	@Test
-	public void testReturnValueInDependentOnMethodParameter2() {
+	public void testReturnValueIndependentOfMethodParameter2() {
 		@SuppressWarnings("unchecked")
 		Comparable<Todo> c = mock(Comparable.class);
 		when(c.compareTo(isA(Todo.class))).thenReturn(0);
@@ -100,7 +98,6 @@ public class MockitoTest {
 		// real method is called so spy.get(0)
 		// throws IndexOutOfBoundsException (list is still empty)
 		when(spy.get(0)).thenReturn("foo");
-
 		assertEquals("foo", spy.get(0));
 	}
 
@@ -112,37 +109,34 @@ public class MockitoTest {
 
 		// You have to use doReturn() for stubbing
 		doReturn("foo").when(spy).get(0);
-
 		assertEquals("foo", spy.get(0));
 	}
-	
+
 	@Test
-	public void testVerify()  {
-	    // create and configure mock
-	    MyClass test = mock(MyClass.class);
-	    when(test.getUniqueId()).thenReturn(43);
+	public void testVerify() {
+		// create and configure mock
+		MyClass test = mock(MyClass.class);
+		when(test.getUniqueId()).thenReturn(43);
 
+		// call method testing on the mock with parameter 12
+		test.testing(12);
+		test.getUniqueId();
+		test.getUniqueId();
 
-	    // call method testing on the mock with parameter 12
-	    test.testing(12);
-	    test.getUniqueId();
-	    test.getUniqueId();
+		// now check if method testing was called with the parameter 12
+		verify(test).testing(12);
 
+		// was the method called twice?
+		verify(test, times(2)).getUniqueId();
 
-	    // now check if method testing was called with the parameter 12
-	    verify(test).testing(12);
-
-	    // was the method called twice?
-	    verify(test, times(2)).getUniqueId();
-
-	    // other alternatives for verifying the number of method calls for a method
-	    verify(test, never()).someMethod("never called");
-	    verify(test, atLeastOnce()).testing(12);
-	    verify(test, atLeast(2)).getUniqueId();
-	    verify(test, times(2)).getUniqueId();
-	    verify(test, atMost(2)).getUniqueId();
-	    // This let's you check that no other methods where called on this object.
-	    // You call it after you have verified the expected method calls.
-	    verifyNoMoreInteractions(test);
+		// other alternatives for verifying the number of method calls for a method
+		verify(test, never()).someMethod("never called");
+		verify(test, atLeastOnce()).testing(12);
+		verify(test, atLeast(2)).getUniqueId();
+		verify(test, times(2)).getUniqueId();
+		verify(test, atMost(2)).getUniqueId();
+		// This let's you check that no other methods where called on this object.
+		// You call it after you have verified the expected method calls.
+		verifyNoMoreInteractions(test);
 	}
 }
