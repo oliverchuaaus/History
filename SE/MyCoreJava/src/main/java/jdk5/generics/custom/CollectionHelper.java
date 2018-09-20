@@ -50,7 +50,7 @@ public final class CollectionHelper {
 	// E is called formal type parameter.
 	// We cannot use List<?> because we cannot add unknowns to list
 	// Without <E> before void, compile error: E cannot be resolved to a type
-	public static <E> void arrayToList(E[] array, List<E> list) {
+	public static <E> void addArrayToList(E[] array, List<E> list) {
 		for (E obj : array) {
 			list.add(obj);
 		}

@@ -49,13 +49,13 @@ public class TestGenericsCustom {
 	public void testGeneric() {
 		List<Number> list1 = new ArrayList<Number>();
 		Number[] array1 = new Number[] { Integer.valueOf(1), Double.valueOf(1.1) };
-		CollectionHelper.arrayToList(array1, list1);
+		CollectionHelper.addArrayToList(array1, list1);
 		assertEquals(Integer.valueOf(1), list1.get(0));
 		assertEquals(Double.valueOf(1.1), list1.get(1));
 
 		List<String> list2 = new ArrayList<String>();
 		String[] array = new String[] { "String1" };
-		CollectionHelper.arrayToList(array, list2);
+		CollectionHelper.addArrayToList(array, list2);
 		assertEquals("String1", list2.get(0));
 	}
 
