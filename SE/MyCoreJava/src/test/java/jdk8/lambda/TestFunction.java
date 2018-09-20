@@ -53,12 +53,12 @@ public class TestFunction {
 	@Test
 	public void testBiFunction() {
 		BiFunction<Integer, Double, Double> function = (a, b) -> a + b;
-		assertEquals(new Double(3), function.apply(1, 2d));
+		assertEquals(Double.valueOf(3), function.apply(1, 2d));
 	}
 
 	@Test
 	public void testBinaryOperator() {
 		BinaryOperator<Integer> function = (a, b) -> a + b;
-		assertEquals(new Integer(3), function.apply(1, 2));
+		assertEquals(Integer.valueOf(3), function.apply(1, 2));
 	}
 }

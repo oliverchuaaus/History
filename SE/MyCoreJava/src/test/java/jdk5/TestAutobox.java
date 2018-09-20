@@ -10,15 +10,15 @@ import org.junit.Test;
 public class TestAutobox {
 	@Test
 	public void testOldWay() {
-		Integer obj = new Integer(1);
+		Integer obj = Integer.valueOf(1);
 		int sum = obj.intValue() + 2;
-		obj = new Integer(sum);
+		obj = Integer.valueOf(sum);
 		assertEquals(3, obj.intValue());
 	}
 
 	@Test
 	public void testNewWay() {
-		Integer obj = new Integer(2);
+		Integer obj = Integer.valueOf(2);
 		obj = obj + 1;
 		assertEquals(3, obj.intValue());
 		assertTrue(3 == obj);
@@ -69,8 +69,8 @@ public class TestAutobox {
 
 	@Test
 	public void testUnboxCompare() {
-		Integer obj1 = new Integer(22);
-		Integer obj2 = new Integer(22);
+		Integer obj1 = Integer.valueOf(22);
+		Integer obj2 = Integer.valueOf(22);
 		int num1 = 22;
 
 		assertFalse(obj1 == obj2);

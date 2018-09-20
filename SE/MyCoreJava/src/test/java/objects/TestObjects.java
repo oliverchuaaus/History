@@ -50,10 +50,9 @@ public class TestObjects {
 	}
 
 	@Test
-	public void testReflectionConstructor() throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException {
+	public void testReflectionConstructor() throws Exception {
 		Class<?> clazz = Class.forName("objects.Objects");
-		Objects objects = (Objects) clazz.newInstance();
+		Objects objects = (Objects) clazz.getDeclaredConstructor().newInstance();
 		objects.setAddress("address");
 		objects.setName("name");
 	}
@@ -63,7 +62,7 @@ public class TestObjects {
 			InstantiationException, IllegalAccessException,
 			NoSuchMethodException, InvocationTargetException {
 		Class<?> clazz = Class.forName("objects.Objects");
-		Objects objects = (Objects) clazz.newInstance();
+		Objects objects = (Objects) clazz.getDeclaredConstructor().newInstance();
 		Method method = clazz.getMethod("setAddress", String.class);
 		method.invoke(objects, "address");
 		assertEquals("address", objects.getAddress());

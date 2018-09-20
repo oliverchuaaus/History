@@ -37,21 +37,21 @@ public class TestGenericsCustom {
 	@Test
 	public void testCorrectCastToSuper2() {
 		List<Number> list1 = new ArrayList<Number>();
-		list1.add(new Integer(1));
-		list1.add(new Double(1.1));
+		list1.add(Integer.valueOf(1));
+		list1.add(Double.valueOf(1.1));
 
 		Number[] array = CollectionHelper.listToNumberArray(list1);
-		assertEquals(new Integer(1), (Number) array[0]);
-		assertEquals(new Double(1.1), (Number) array[1]);
+		assertEquals(Integer.valueOf(1), (Number) array[0]);
+		assertEquals(Double.valueOf(1.1), (Number) array[1]);
 	}
 
 	@Test
 	public void testGeneric() {
 		List<Number> list1 = new ArrayList<Number>();
-		Number[] array1 = new Number[] { new Integer(1), new Double(1.1) };
+		Number[] array1 = new Number[] { Integer.valueOf(1), Double.valueOf(1.1) };
 		CollectionHelper.arrayToList(array1, list1);
-		assertEquals(new Integer(1), list1.get(0));
-		assertEquals(new Double(1.1), list1.get(1));
+		assertEquals(Integer.valueOf(1), list1.get(0));
+		assertEquals(Double.valueOf(1.1), list1.get(1));
 
 		List<String> list2 = new ArrayList<String>();
 		String[] array = new String[] { "String1" };
@@ -60,8 +60,7 @@ public class TestGenericsCustom {
 	}
 
 	@Test
-	public void testGenericFactory() throws InstantiationException,
-			IllegalAccessException {
+	public void testGenericFactory() throws Exception {
 		Integer integer = Integer.valueOf(100);
 		Double double1 = Double.valueOf(150.55);
 
