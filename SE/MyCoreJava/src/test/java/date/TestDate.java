@@ -50,7 +50,7 @@ public class TestDate {
 	@Test
 	public void testDateRollAndAdd() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-		Date d = sdf.parse("1-Dec-1977");
+		Date d = sdf.parse("01-Dec-1977");
 		Calendar c = Calendar.getInstance();
 		c.setTime(d);
 		c.roll(Calendar.MONTH, 1);

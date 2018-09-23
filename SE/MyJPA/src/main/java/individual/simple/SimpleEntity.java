@@ -40,11 +40,20 @@ public class SimpleEntity {
 
 	@Temporal(TemporalType.DATE)
 	private Date dateField;
-
+	
 	// Can only use java.util.Date and java.util.Calendar for @Temporal
 	// By default, is TemporalType.TIMESTAMP
 	private Calendar timeStampField;
+/*		
+	@Temporal(TemporalType.DATE)
+	private LocalDate localDateField;
 
+	@Temporal(TemporalType.TIME)
+	private LocalTime localTimeField;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime localDateTimeField;
+*/
 	@Enumerated(EnumType.STRING)
 	private GenderEnum enumStringField;
 

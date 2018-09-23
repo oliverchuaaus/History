@@ -1,4 +1,4 @@
-package jdk8.lambda;
+package jdk8.functions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -11,6 +11,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.junit.Test;
+
+import jdk8.lambda.Developer;
 
 public class TestFunction {
 
