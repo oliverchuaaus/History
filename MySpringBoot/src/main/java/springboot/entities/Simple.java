@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQuery;
+import javax.persistence.PreRemove;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -81,5 +82,10 @@ public class Simple {
 
 	public void setRegistered(Boolean registered) {
 		this.registered = registered;
+	}
+	
+	@PreRemove
+	public void preRemove() {
+		System.out.println("PreRemove called");
 	}
 }

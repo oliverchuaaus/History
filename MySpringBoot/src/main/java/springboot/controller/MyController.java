@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import springboot.entities.City;
-import springboot.entities.CityService;
 import springboot.entities.Simple;
-import springboot.entities.SimpleService;
+import springboot.services.CityService;
+import springboot.services.SimpleService;
 
 @RestController
 public class MyController {
@@ -27,19 +27,19 @@ public class MyController {
 		cityService.updateCity(city, "London");
 		Long id = cityService.getCityByName("London").getId();
 		cityService.deleteCity(city);
-		
+
 		return "Hello World! " + id;
 	}
-	
+
 	@RequestMapping("/simple")
 	String simple() {
 		Simple simple = new Simple();
 		simple.setBirthDate(LocalDate.now());
 		simple.setBirthTime(LocalTime.now());
-		
-		simpleService.findDefaultMethods(simple);
-		
+
+		simpleService.save(simple);
 		Long id = simple.getId();
+		simpleService.delete(simple);
 
 		return id.toString();
 	}

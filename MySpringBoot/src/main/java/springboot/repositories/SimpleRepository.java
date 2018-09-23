@@ -1,4 +1,4 @@
-package springboot.entities;
+package springboot.repositories;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import springboot.entities.Simple;
 
 @Repository
 public interface SimpleRepository extends CrudRepository<Simple, Long> {
@@ -103,8 +105,18 @@ public interface SimpleRepository extends CrudRepository<Simple, Long> {
 	// Pagination
 	public List<Simple> findAll(Pageable pageable);
 
+	// Modifying
 	@Modifying()
 	@Transactional
 	@Query("update Simple u set u.firstName = ?1 where u.lastName = ?2")
 	int updateFirstNameForLastName(String firstname, String lastname);
+
+	@Transactional
+	int deleteByLastName(String lastname);
+
+	@Modifying()
+	@Transactional
+	@Query("delete from Simple u where u.lastName = ?1")
+	int deleteInBulkByLastName(String lastname);
+
 }

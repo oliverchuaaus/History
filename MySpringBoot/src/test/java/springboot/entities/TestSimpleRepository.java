@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import springboot.repositories.SimpleRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestSimpleRepository {
@@ -268,7 +270,6 @@ public class TestSimpleRepository {
 
 		list = simpleRepository.findAll(PageRequest.of(2, 1));
 		assertEquals(1, list.size());
-
 	}
 
 	@Test
@@ -276,6 +277,16 @@ public class TestSimpleRepository {
 		int update = simpleRepository.updateFirstNameForLastName("firstName1", "lastName");
 		assertEquals(1, update);
 		assertEquals("firstName1", simpleRepository.findAll().iterator().next().getFirstName());
+		
+		update = simpleRepository.deleteByLastName("lastName");
+		assertEquals(1, update);
+		assertEquals(0, simpleRepository.count());
+
+		Simple simple = createSimple();
+		simpleRepository.save(simple);
+		update = simpleRepository.deleteInBulkByLastName("lastName");
+		assertEquals(1, update);
+		assertEquals(0, simpleRepository.count());
 	}
 
 }

@@ -1,9 +1,12 @@
-package springboot.entities;
+package springboot.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import springboot.entities.City;
+import springboot.repositories.CityRepository;
 
 @Service
 public class CityService {
