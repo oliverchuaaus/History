@@ -156,8 +156,10 @@ public class TestSimpleRepository {
 		assertTrue(simpleRepository.findByFirstNameAndLastName("firstName1", "lastName").isEmpty());
 		assertFalse(simpleRepository.findByFirstNameOrLastName("firstName1", "lastName").isEmpty());
 		assertTrue(simpleRepository.findByFirstNameOrLastName("firstName1", "lastName1").isEmpty());
-		assertFalse(simpleRepository.findByFirstNameAndLastNameAllIgnoreCase("firstname", "lastname").isEmpty());
-		assertTrue(simpleRepository.findByFirstNameAndLastNameAllIgnoreCase("firstname1", "lastname").isEmpty());
+		assertFalse(
+				simpleRepository.findByFirstNameAndLastNameAllIgnoreCase("firstname", "lastname").isEmpty());
+		assertTrue(
+				simpleRepository.findByFirstNameAndLastNameAllIgnoreCase("firstname1", "lastname").isEmpty());
 		assertFalse(simpleRepository.findByFirstNameIn(Arrays.asList("firstName", "lastName")).isEmpty());
 		assertTrue(simpleRepository.findByFirstNameIn(Arrays.asList("firstName1", "lastName")).isEmpty());
 		assertFalse(simpleRepository.findByFirstNameNotIn(Arrays.asList("firstName1", "lastName")).isEmpty());
@@ -166,10 +168,10 @@ public class TestSimpleRepository {
 
 	@Test
 	public void testFindDate() {
-		assertFalse(simpleRepository.findByBirthDateBetween(LocalDate.of(1977, 6, 19), LocalDate.of(1977, 6, 21))
-				.isEmpty());
-		assertTrue(simpleRepository.findByBirthDateBetween(LocalDate.of(1977, 6, 21), LocalDate.of(1977, 6, 23))
-				.isEmpty());
+		assertFalse(simpleRepository
+				.findByBirthDateBetween(LocalDate.of(1977, 6, 19), LocalDate.of(1977, 6, 21)).isEmpty());
+		assertTrue(simpleRepository
+				.findByBirthDateBetween(LocalDate.of(1977, 6, 21), LocalDate.of(1977, 6, 23)).isEmpty());
 
 		assertFalse(simpleRepository.findByBirthDateBefore(LocalDate.of(1977, 6, 21)).isEmpty());
 		assertTrue(simpleRepository.findByBirthDateBefore(LocalDate.of(1977, 6, 20)).isEmpty());
@@ -247,18 +249,18 @@ public class TestSimpleRepository {
 		assertEquals("firstName", list.get(0).getFirstName());
 
 		// FIXME unsafe not working
-//		list = simpleRepository.findAll(JpaSort.unsafe("LENGTH(firstName)"));
-//		assertEquals("firstName", list.get(0).getFirstName());
+		// list = simpleRepository.findAll(JpaSort.unsafe("LENGTH(firstName)"));
+		// assertEquals("firstName", list.get(0).getFirstName());
 
 		List<Object> objList;
 		objList = simpleRepository.findAllAliasedFunction(Sort.by("fnLength"));
 		Object[] objArray = (Object[]) objList.get(0);
 		assertEquals("firstName", objArray[1]);
-
 	}
 
 	@Test
 	public void testPageable() {
+
 		Simple simple = createSimple();
 		simple.setFirstName("firstName1");
 		simpleRepository.save(simple);
@@ -277,7 +279,7 @@ public class TestSimpleRepository {
 		int update = simpleRepository.updateFirstNameForLastName("firstName1", "lastName");
 		assertEquals(1, update);
 		assertEquals("firstName1", simpleRepository.findAll().iterator().next().getFirstName());
-		
+
 		update = simpleRepository.deleteByLastName("lastName");
 		assertEquals(1, update);
 		assertEquals(0, simpleRepository.count());
@@ -289,4 +291,32 @@ public class TestSimpleRepository {
 		assertEquals(0, simpleRepository.count());
 	}
 
+	@Test
+	public void testProjection() {
+		// Closed Projection - exact field
+		List<NamesOnly> namesList;
+		namesList = simpleRepository.findByAge(25);
+		assertEquals(1, namesList.size());
+		assertEquals("firstName", namesList.get(0).getFirstName());
+		assertEquals("lastName", namesList.get(0).getLastName());
+
+		// Closed Projection - exact field, DTO
+		List<NamesOnlyDTO> namesListDTO;
+		namesListDTO = simpleRepository.findByAgeOrderByFirstName(25);
+		assertEquals(1, namesListDTO.size());
+		assertEquals("firstName", namesListDTO.get(0).getFirstName());
+		assertEquals("lastName", namesListDTO.get(0).getLastName());
+
+		// Open Projection - derived field, value annotation
+		List<NamesOnlyValueAnnotation> namesListAnnotation;
+		namesListAnnotation = simpleRepository.findByAgeOrderByAge(25);
+		assertEquals(1, namesListAnnotation.size());
+		assertEquals("firstName lastName", namesListAnnotation.get(0).getFullName());
+
+		// Open Projection - derived field, default method
+		List<NamesOnlyDefaultMethod> namesListDefaultMethod;
+		namesListDefaultMethod = simpleRepository.findByAgeOrderByLastName(25);
+		assertEquals(1, namesListDefaultMethod.size());
+		assertEquals("firstName lastName", namesListDefaultMethod.get(0).getFullName());
+	}
 }

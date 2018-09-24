@@ -13,10 +13,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import springboot.entities.NamesOnly;
+import springboot.entities.NamesOnlyDTO;
+import springboot.entities.NamesOnlyDefaultMethod;
+import springboot.entities.NamesOnlyValueAnnotation;
 import springboot.entities.Simple;
 
 @Repository
-public interface SimpleRepository extends CrudRepository<Simple, Long> {
+public interface SimpleRepository extends CrudRepository<Simple, Long>{
 	// String - no param
 	public List<Simple> findByFirstNameIsNull();
 
@@ -109,14 +113,23 @@ public interface SimpleRepository extends CrudRepository<Simple, Long> {
 	@Modifying()
 	@Transactional
 	@Query("update Simple u set u.firstName = ?1 where u.lastName = ?2")
-	int updateFirstNameForLastName(String firstname, String lastname);
+	public int updateFirstNameForLastName(String firstname, String lastname);
 
 	@Transactional
-	int deleteByLastName(String lastname);
+	public int deleteByLastName(String lastname);
 
 	@Modifying()
 	@Transactional
 	@Query("delete from Simple u where u.lastName = ?1")
-	int deleteInBulkByLastName(String lastname);
+	public int deleteInBulkByLastName(String lastname);
+
+	// Projection
+	public List<NamesOnly> findByAge(int age);
+
+	public List<NamesOnlyDTO> findByAgeOrderByFirstName(int age);
+
+	public List<NamesOnlyValueAnnotation> findByAgeOrderByAge(int age);
+
+	public List<NamesOnlyDefaultMethod> findByAgeOrderByLastName(int age);
 
 }

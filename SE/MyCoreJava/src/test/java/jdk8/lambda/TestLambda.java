@@ -12,7 +12,6 @@ import jdk8.lambda.Calculator.IntegerMath;
 
 public class TestLambda {
 
-
 	@Test
 	public void testComparatorWithoutLambda() {
 		List<Developer> developerList = TestHelper.getDevelopers();
@@ -52,6 +51,16 @@ public class TestLambda {
 	public void testComparatorWithLambdaObject() {
 		List<Developer> developerList = TestHelper.getDevelopers();
 		Comparator<Developer> comparator = (o1, o2) -> o1.getName().compareTo(o2.getName());
+
+		TestHelper.printList(developerList);
+		developerList.sort(comparator);
+		TestHelper.printList(developerList);
+	}
+
+	@Test
+	public void testComparatorWithLambdaObjectMultilineFunction() {
+		List<Developer> developerList = TestHelper.getDevelopers();
+		Comparator<Developer> comparator = (o1, o2) -> {o1.getName(); return o1.getName().compareTo(o2.getName()); } ;
 
 		TestHelper.printList(developerList);
 		developerList.sort(comparator);
