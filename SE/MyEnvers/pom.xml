@@ -3,15 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tougher</groupId>
-	<artifactId>MySpringBoot</artifactId>
+	<artifactId>MyEnvers</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<!-- Inherit defaults from Spring Boot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.5.RELEASE</version>
 	</parent>
-	
+
 	<properties>
 		<java.version>10</java.version>
 	</properties>	
@@ -62,6 +63,19 @@
 			<version>1.1.1</version>
 		</dependency>
 		<!-- Post jdk 9 fix end -->
+		<!-- Envers start -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>11.2.0</version>
+		</dependency>
+		<!-- Envers end -->
+
 	</dependencies>
 
 
