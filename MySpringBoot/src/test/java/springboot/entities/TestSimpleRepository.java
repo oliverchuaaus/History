@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import springboot.repositories.SimpleRepository;
@@ -248,9 +249,8 @@ public class TestSimpleRepository {
 		list = simpleRepository.findAll(Sort.by(Direction.ASC, "lastName", "firstName"));
 		assertEquals("firstName", list.get(0).getFirstName());
 
-		// FIXME unsafe not working
-		// list = simpleRepository.findAll(JpaSort.unsafe("LENGTH(firstName)"));
-		// assertEquals("firstName", list.get(0).getFirstName());
+		list = simpleRepository.findAll(JpaSort.unsafe("LENGTH(firstName)"));
+		assertEquals("firstName", list.get(0).getFirstName());
 
 		List<Object> objList;
 		objList = simpleRepository.findAllAliasedFunction(Sort.by("fnLength"));

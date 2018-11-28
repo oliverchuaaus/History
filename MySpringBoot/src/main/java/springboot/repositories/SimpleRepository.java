@@ -21,6 +21,7 @@ import springboot.entities.Simple;
 
 @Repository
 public interface SimpleRepository extends CrudRepository<Simple, Long>{
+	
 	// String - no param
 	public List<Simple> findByFirstNameIsNull();
 
@@ -101,6 +102,8 @@ public interface SimpleRepository extends CrudRepository<Simple, Long>{
 	// Sort
 	public List<Simple> findAllByOrderByFirstName();
 
+	//Note: workaround is to add a query for this to not throw exception for JpaSort.unsafe call
+	@Query("select u from Simple u")
 	public List<Simple> findAll(Sort sort);
 
 	@Query("select length(firstName) as fnLength, firstName from Simple u")
