@@ -16,13 +16,11 @@ public abstract class Authoriser<E extends Number> {
 		return "authorise: " + number.intValue();
 	}
 
-	public static <E extends Number> Authoriser<E> getAuthoriser(E number)
-			throws InstantiationException, IllegalAccessException {
+	public static <E extends Number> Authoriser<E> getAuthoriser(E number) throws Exception {
 		@SuppressWarnings("rawtypes")
-		Class<? extends Authoriser> authoriserClazz = authoriserMap.get(number
-				.getClass());
+		Class<? extends Authoriser> authoriserClazz = authoriserMap.get(number.getClass());
 		@SuppressWarnings("unchecked")
-		Authoriser<E> authoriser = authoriserClazz.newInstance();
+		Authoriser<E> authoriser = authoriserClazz.getDeclaredConstructor().newInstance();
 		return authoriser;
 	}
 

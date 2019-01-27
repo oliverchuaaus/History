@@ -1,4 +1,4 @@
-package jdk8.lambda;
+package jdk8.functions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -11,6 +11,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.junit.Test;
+
+import jdk8.lambda.Developer;
 
 public class TestFunction {
 
@@ -53,12 +55,12 @@ public class TestFunction {
 	@Test
 	public void testBiFunction() {
 		BiFunction<Integer, Double, Double> function = (a, b) -> a + b;
-		assertEquals(new Double(3), function.apply(1, 2d));
+		assertEquals(Double.valueOf(3), function.apply(1, 2d));
 	}
 
 	@Test
 	public void testBinaryOperator() {
 		BinaryOperator<Integer> function = (a, b) -> a + b;
-		assertEquals(new Integer(3), function.apply(1, 2));
+		assertEquals(Integer.valueOf(3), function.apply(1, 2));
 	}
 }

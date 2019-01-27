@@ -1,4 +1,4 @@
-package jdk8.lambda;
+package jdk8.streams;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
+
+import jdk8.lambda.Developer;
+import jdk8.lambda.TestHelper;
 
 public class TestStreams {
 

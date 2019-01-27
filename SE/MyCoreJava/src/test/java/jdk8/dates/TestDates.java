@@ -128,7 +128,7 @@ public class TestDates {
 	}
 
 	@Test
-	public void testFormatter() {
+	public void testParseAndFormat() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate date = LocalDate.parse("20/06/1977", formatter);
 		System.out.println(date);
@@ -140,7 +140,11 @@ public class TestDates {
 
 	@Test
 	public void testDateArithmetic() {
-		LocalDate date = LocalDate.of(1977, 6, 20);
+		LocalDate date = LocalDate.of(1977, 12, 31);
+		date = date.plusDays(1);
+		System.out.println(date);
+		
+		date = LocalDate.of(1977, 06, 20);
 		date = date.plusDays(1);
 		System.out.println(date);
 

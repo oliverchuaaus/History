@@ -30,11 +30,6 @@ public class Objects {
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;

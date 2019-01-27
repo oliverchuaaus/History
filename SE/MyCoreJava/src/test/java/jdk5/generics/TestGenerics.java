@@ -122,14 +122,14 @@ public class TestGenerics {
 	public void testArrayToList() {
 		Integer[] intArray = new Integer[] { 1, 2 };
 		List<Integer> intList = new ArrayList<Integer>();
-		CollectionHelper.arrayToList(intArray, intList);
+		CollectionHelper.addArrayToList(intArray, intList);
 		assertEquals(2, intList.size());
 		assertEquals(1, intList.get(0).intValue());
 		assertEquals(2, intList.get(1).intValue());
 
 		Double[] doubleArray = new Double[] { 1.0, 2.0 };
 		List<Double> doubleList = new ArrayList<Double>();
-		CollectionHelper.arrayToList(doubleArray, doubleList);
+		CollectionHelper.addArrayToList(doubleArray, doubleList);
 		assertEquals(2, doubleList.size());
 		assertEquals(1.0, intList.get(0).doubleValue(), 0.0);
 		assertEquals(2.0, intList.get(1).doubleValue(), 0.0);
@@ -151,7 +151,7 @@ public class TestGenerics {
 		// arguments (Double)
 		// intList.add(Double.valueOf(1.0));
 
-		CollectionHelper.arrayToList(intArray, numList);
+		CollectionHelper.addArrayToList(intArray, numList);
 		assertEquals(3, numList.size());
 
 		assertEquals(1.0, numList.get(0));
