@@ -19,11 +19,11 @@ public class TestFunction {
 		Predicate<Developer> predicate = (d -> d.getAge() >= 18 && d.getAge() <= 25);
 		Developer developer = new Developer("Toffer", null, 18);
 		if (!predicate.test(developer)) {
-			fail("predicate failed");
+			fail("predicate should have return true");
 		}
 		developer = new Developer("Toffer", null, 26);
 		if (predicate.test(developer)) {
-			fail("predicate failed");
+			fail("predicate should have return false");
 		}
 	}
 

@@ -43,6 +43,7 @@ public class TestStreams {
 				.collect(Collectors.toList());
 		TestHelper.printList(mappedList);
 		assertEquals(1, mappedList.size());
+		assertEquals("jason", mappedList.get(0));
 	}
 
 	//TODO: groupingBy, flatMap,

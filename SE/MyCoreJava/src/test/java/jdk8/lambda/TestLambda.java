@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -82,6 +83,13 @@ public class TestLambda {
 		IntegerMath subtraction = (a, b, c) -> a - b - c;
 		assertEquals(52, myApp.operateTernary(40, 2, 10, addition));
 		assertEquals(5, myApp.operateTernary(20, 10, 5, subtraction));
+	}
+	
+	@Test
+	public void testLambdaNonFunction() {
+		List<Developer> developerList = TestHelper.getDevelopers();
+		Function<Developer, Void> f = (o1) -> {o1.getName().compareTo(o1.getName()); return null;};
+		assertEquals(null, f.apply(developerList.get(0)));
 	}
 
 }
