@@ -39,10 +39,8 @@ public class Objects {
 		}
 		Objects obj2 = (Objects) obj;
 
-		if (((name == null && obj2.name == null) || (name != null && name
-				.equals(obj2.name)))
-				&& ((address == null && obj2.address == null) || (address != null && address
-						.equals(obj2.address)))
+		if (((name == null && obj2.name == null) || (name != null && name.equals(obj2.name)))
+				&& ((address == null && obj2.address == null) || (address != null && address.equals(obj2.address)))
 
 		) {
 			return true;
@@ -53,8 +51,7 @@ public class Objects {
 
 	@Override
 	public int hashCode() {
-		return name == null ? 0 : name.hashCode() + address == null ? 0
-				: address.hashCode();
+		return name == null ? 0 : name.hashCode() + address == null ? 0 : address.hashCode();
 	}
 
 	@Override

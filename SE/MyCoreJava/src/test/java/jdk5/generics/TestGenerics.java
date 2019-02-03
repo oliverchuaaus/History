@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import jdk5.generics.custom.CollectionHelper;
-
 import org.junit.Test;
+
+import jdk5.generics.custom.CollectionHelper;
 
 /**
  * http://java.sun.com/j2se/1.5/pdf/generics-tutorial.pdf

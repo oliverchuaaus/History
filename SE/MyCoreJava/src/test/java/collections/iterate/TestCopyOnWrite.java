@@ -25,8 +25,7 @@ public class TestCopyOnWrite {
 		stateList.add("Sydney");
 		stateList.add("Melbourne");
 
-		CopyOnWriteArrayList<String> stateList2 = new CopyOnWriteArrayList<String>(
-				stateList);
+		CopyOnWriteArrayList<String> stateList2 = new CopyOnWriteArrayList<String>(stateList);
 
 		Iterator<String> iter = stateList2.iterator();
 		stateList2.add("Hobart");

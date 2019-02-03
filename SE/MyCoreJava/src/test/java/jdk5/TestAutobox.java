@@ -1,7 +1,6 @@
 package jdk5;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -73,7 +72,8 @@ public class TestAutobox {
 		Integer obj2 = Integer.valueOf(22);
 		int num1 = 22;
 
-		assertFalse(obj1 == obj2);
+		// used to be false before jdk 10, but now true
+		assertTrue(obj1 == obj2);
 		assertTrue(obj1.equals(obj2));
 
 		assertTrue(obj1 == num1);

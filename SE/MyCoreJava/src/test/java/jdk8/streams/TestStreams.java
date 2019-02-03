@@ -1,9 +1,11 @@
 package jdk8.streams;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,18 @@ public class TestStreams {
 	}
 
 	@Test
+	public void testAllMatch() {
+		List<Developer> developerList = TestHelper.getDevelopers();
+		boolean allMatch = developerList.stream().allMatch(d -> d.getAge() > 9);
+		assertTrue(allMatch);
+
+		allMatch = developerList.stream().allMatch(d -> d.getAge() > 10);
+		assertFalse(allMatch);
+
+		System.out.println("");
+	}
+
+	@Test
 	public void testMap() {
 		List<Developer> developerList = TestHelper.getDevelopers();
 		TestHelper.printList(developerList);
@@ -46,8 +60,20 @@ public class TestStreams {
 				.collect(Collectors.toList());
 		TestHelper.printList(mappedList);
 		assertEquals(1, mappedList.size());
-		assertEquals("jason", mappedList.get(0));
 	}
 
-	//TODO: groupingBy, flatMap,
+	@Test
+	public void testFlatMap() {
+		List<Developer> developerList1 = TestHelper.getDevelopers();
+		List<Developer> developerList2 = TestHelper.getDevelopers();
+		List<List<Developer>> listOfLists = new ArrayList<List<Developer>>();
+		listOfLists.add(developerList1);
+		listOfLists.add(developerList2);
+		List<String> mappedList = listOfLists.stream().flatMap(list -> list.stream()).map(d -> d.getName())
+				.collect(Collectors.toList());
+		TestHelper.printList(mappedList);
+		assertEquals(8, mappedList.size());
+	}
+
+	// TODO: groupingBy
 }

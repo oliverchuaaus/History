@@ -19,12 +19,10 @@ public class TestSerializableTransient {
 	public void testSerializeNoTransient() throws IOException {
 		SerializableWithNoTransientObject so = new SerializableWithNoTransientObject();
 		so.setField1("field1");
-		FileInputStream fis = new FileInputStream(SOURCE
-				+ "OlderSerializableObject.ser");
+		FileInputStream fis = new FileInputStream(SOURCE + "OlderSerializableObject.ser");
 		// If we didn't set non-Serializable field, no exception will be thrown
 		so.setStream(fis);
-		FileOutputStream fos = new FileOutputStream(RESOURCE
-				+ "SerializableObject.ser");
+		FileOutputStream fos = new FileOutputStream(RESOURCE + "SerializableObject.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		try {
 			oos.writeObject(so);
@@ -43,11 +41,9 @@ public class TestSerializableTransient {
 	public void testSerializeTransient() throws IOException {
 		SerializableWithTransientObject so = new SerializableWithTransientObject();
 		so.setField1("field1");
-		FileInputStream fis = new FileInputStream(SOURCE
-				+ "OlderSerializableObject.ser");
+		FileInputStream fis = new FileInputStream(SOURCE + "OlderSerializableObject.ser");
 		so.setStream(fis);
-		FileOutputStream fos = new FileOutputStream(RESOURCE
-				+ "SerializableObject.ser");
+		FileOutputStream fos = new FileOutputStream(RESOURCE + "SerializableObject.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		try {
 			oos.writeObject(so);

@@ -143,7 +143,7 @@ public class TestDates {
 		LocalDate date = LocalDate.of(1977, 12, 31);
 		date = date.plusDays(1);
 		System.out.println(date);
-		
+
 		date = LocalDate.of(1977, 06, 20);
 		date = date.plusDays(1);
 		System.out.println(date);

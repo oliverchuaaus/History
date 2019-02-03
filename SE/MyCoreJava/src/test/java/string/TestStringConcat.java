@@ -17,11 +17,11 @@ public class TestStringConcat {
 	/*
 	 * Output is
 	 * 
-	 * iterations: 100 Concatenate: 0 milliseconds Buffer: 0 milliseconds
-	 * Builder: 0 milliseconds
+	 * iterations: 100 Concatenate: 0 milliseconds Buffer: 0 milliseconds Builder: 0
+	 * milliseconds
 	 * 
-	 * iterations: 1000 Concatenate: 15 milliseconds Buffer: 0 milliseconds
-	 * Builder: 0 milliseconds
+	 * iterations: 1000 Concatenate: 15 milliseconds Buffer: 0 milliseconds Builder:
+	 * 0 milliseconds
 	 * 
 	 * iterations: 10000 Concatenate: 875 milliseconds Buffer: 0 milliseconds
 	 * Builder: 16 milliseconds
@@ -63,8 +63,7 @@ public class TestStringConcat {
 			assertTrue(concatTime >= builderTime);
 		}
 		// Less than 16 ms difference is negligible
-		assertTrue("Difference " + Math.abs(bufferTime - builderTime)
-				+ " is more than 16 ms.",
+		assertTrue("Difference " + Math.abs(bufferTime - builderTime) + " is more than 16 ms.",
 				Math.abs(bufferTime - builderTime) <= 16);
 	}
 

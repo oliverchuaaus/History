@@ -12,10 +12,9 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Test;
 
 public class TestOptional {
+
 	@Test
 	public void testCreateOptional() {
-		Optional<Integer> optionalEmpty = Optional.empty();
-
 		// Get
 		try {
 			Optional.of(null);
@@ -25,14 +24,24 @@ public class TestOptional {
 			fail("unexpected");
 		}
 
+		Optional<Integer> optionalEmpty = Optional.empty();
+		assertFalse(optionalEmpty.isPresent());
+
 		Integer integer = null;
 		Optional<Integer> optionalEmpty2 = Optional.ofNullable(integer);
+		assertFalse(optionalEmpty2.isPresent());
+
+		// Get
+		try {
+			Optional.of(integer);
+			fail("should have failed");
+		} catch (NullPointerException e) {
+		} catch (Exception e) {
+			fail("unexpected");
+		}
 
 		integer = Integer.valueOf(1);
 		Optional<Integer> optional3 = Optional.of(integer);
-
-		assertFalse(optionalEmpty.isPresent());
-		assertFalse(optionalEmpty2.isPresent());
 		assertTrue(optional3.isPresent());
 	}
 
@@ -67,16 +76,8 @@ public class TestOptional {
 		optional2.ifPresent(num -> num.increment());
 		assertEquals(mutable2, optional2.get());
 
-		// IfPresentOrElse
-		optionalEmpty.ifPresentOrElse(num -> fail("should have failed"), () -> System.out.println("none"));
-		optional2.ifPresentOrElse(num -> num.decrement(), () -> fail("should have failed"));
-		assertEquals(1, optional2.get().intValue());
-
-		// Or
 		MutableInt mutable100 = new MutableInt(100);
 		Optional<MutableInt> optional100 = Optional.of(mutable100);
-		assertEquals(optional100, optionalEmpty.or(() -> optional100));
-		assertEquals(optional2, optional2.or(() -> optional100));
 
 		// OrElse
 		assertEquals(mutable100, optionalEmpty.orElse(mutable100));
@@ -86,53 +87,31 @@ public class TestOptional {
 		assertEquals(mutable100, optionalEmpty.orElseGet(() -> mutable100));
 		assertEquals(mutable1, optional2.orElseGet(() -> mutable100));
 
-		// OrElseThrow
-		try {
-			optionalEmpty.orElseThrow();
-			fail("should have failed");
-		} catch (NoSuchElementException e) {
-		} catch (Exception e) {
-			fail("unexpected");
-		}
-		assertEquals(mutable1, optional2.orElseThrow());
-
-		// OrElseThrowException
-		try {
-			optionalEmpty.orElseThrow(() -> new IllegalArgumentException());
-			fail("should have failed");
-		} catch (IllegalArgumentException e) {
-		} catch (Exception e) {
-			fail("unexpected");
-		}
-		assertEquals(mutable1, optional2.orElseThrow());
-
 		// Filter
 		assertFalse(optionalEmpty.filter(num -> num.intValue() == 1).isPresent());
-		assertTrue(optional2.filter(num -> num.intValue() == 1).isPresent());
+		assertTrue(optional2.filter(num -> num.intValue() == 2).isPresent());
 		// Map
 		assertEquals(Optional.empty(), optionalEmpty.map(num -> num.incrementAndGet()));
-		assertEquals(2, optional2.map(num -> num.incrementAndGet()).get().intValue());
+		assertEquals(1, optional2.map(num -> num.decrementAndGet()).get().intValue());
 
 		// FlatMap
 		assertEquals(Optional.empty(), optionalEmpty.map(num -> num));
-		assertEquals(Optional.of(Optional.of(mutable2)), optional2.map(num -> Optional.of(num)));
+		assertEquals(Optional.of(Optional.of(mutable1)), optional2.map(num -> Optional.of(num)));
 
 		assertEquals(Optional.empty(), optionalEmpty.flatMap(num -> optional100));
-		assertEquals(Optional.of(mutable2), optional2.flatMap(num -> Optional.of(num)));
-
-		// Stream
-		assertEquals(0, optionalEmpty.stream().count());
-		assertEquals(1, optional2.stream().count());
+		assertEquals(Optional.of(mutable1), optional2.flatMap(num -> Optional.of(num)));
 	}
 
 	@Test
 	public void testOptionalNullPointer() {
 		Planet planet = new Planet();
 
+		// all nested objects null
 		String cityName = planet.getContinent().flatMap(continent -> continent.getCountry())
 				.flatMap(country -> country.getCity()).map(city -> city.getCityName()).orElse("");
 		assertEquals("", cityName);
 
+		// nested objects not null
 		planet.setContinent(Optional.ofNullable(new Continent()));
 		planet.getContinent().get().setCountry(Optional.ofNullable(new Country()));
 		planet.getContinent().get().getCountry().get().setCity((Optional.ofNullable(new City())));

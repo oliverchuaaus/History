@@ -22,8 +22,7 @@ public class TestRemoveInIterator {
 		stringList.add("Perth");
 		stringList.add("Darwin");
 		stringList.add("Brisbane");
-		for (Iterator<String> iterator = stringList.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<String> iterator = stringList.iterator(); iterator.hasNext();) {
 			String capital = (String) iterator.next();
 			if ("Hobart".equals(capital)) {
 				// This is the correct way of removing elements in a list using
@@ -65,8 +64,7 @@ public class TestRemoveInIterator {
 		stringList.add("Brisbane");
 
 		try {
-			for (Iterator<String> iterator = stringList.iterator(); iterator
-					.hasNext();) {
+			for (Iterator<String> iterator = stringList.iterator(); iterator.hasNext();) {
 				String capital = (String) iterator.next();
 				// After modifying the list and iterator.next() is called,
 				// ConcurrentModificationException will be thrown.

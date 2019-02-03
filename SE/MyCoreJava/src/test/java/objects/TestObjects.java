@@ -58,8 +58,7 @@ public class TestObjects {
 	}
 
 	@Test
-	public void testReflectionMethod() throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
+	public void testReflectionMethod() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			NoSuchMethodException, InvocationTargetException {
 		Class<?> clazz = Class.forName("objects.Objects");
 		Objects objects = (Objects) clazz.getDeclaredConstructor().newInstance();

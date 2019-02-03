@@ -72,8 +72,7 @@ public class TestGenericsCustom {
 	}
 
 	@Test
-	public void testBadGenericFactory() throws InstantiationException,
-			IllegalAccessException {
+	public void testBadGenericFactory() throws InstantiationException, IllegalAccessException {
 		Short short1 = Short.valueOf("150");
 
 		// Compile error: Bound mismatch: The generic method getAuthoriser(E) of

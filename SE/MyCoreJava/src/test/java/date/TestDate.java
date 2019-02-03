@@ -11,8 +11,7 @@ import org.junit.Test;
 
 public class TestDate {
 	private SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-	private String testdata[] = { "01-Jan-1999", "14-Feb-2001", "31-Dec-2007",
-			"31-Dec-1997", "29-Jun-1997" };
+	private String testdata[] = { "01-Jan-1999", "14-Feb-2001", "31-Dec-2007", "31-Dec-1997", "29-Jun-1997" };
 
 	// Cannot test bad cause thread assert fail does not register
 	@Test
@@ -32,10 +31,8 @@ public class TestDate {
 								str2 = df.format(d);
 							}
 							if (!str.equals(str2)) {
-								throw new RuntimeException(
-										"date conversion failed after " + j
-												+ " iterations. Expected "
-												+ str + " but got " + str2);
+								throw new RuntimeException("date conversion failed after " + j
+										+ " iterations. Expected " + str + " but got " + str2);
 							}
 						}
 					} catch (ParseException e) {
@@ -49,20 +46,20 @@ public class TestDate {
 
 	@Test
 	public void testDateRollAndAdd() throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-		Date d = sdf.parse("01-Dec-1977");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date d = sdf.parse("01-12-1977");
 		Calendar c = Calendar.getInstance();
 		c.setTime(d);
 		c.roll(Calendar.MONTH, 1);
 
 		String dateString = sdf.format(c.getTime());
-		assertEquals("01-Jan-1977", dateString);
+		assertEquals("01-01-1977", dateString);
 		// not 01-Jan-1978
 
 		c.setTime(d);
 		c.add(Calendar.MONTH, 1);
 		dateString = sdf.format(c.getTime());
-		assertEquals("01-Jan-1978", dateString);
+		assertEquals("01-01-1978", dateString);
 		// not 01-Jan-1978
 
 	}

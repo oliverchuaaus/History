@@ -23,8 +23,7 @@ import org.junit.Test;
 public class TestCollections {
 	@Test
 	public void testToList() throws Exception {
-		List<String> states = Arrays.asList("NSW", "QLD", "TAS", "VIC", "WA",
-				"NT", "ACT");
+		List<String> states = Arrays.asList("NSW", "QLD", "TAS", "VIC", "WA", "NT", "ACT");
 
 		int i = 0;
 		for (String state : states) {
@@ -125,20 +124,17 @@ public class TestCollections {
 	@Test
 	public void testArrayToString() throws Exception {
 		String[] states = new String[] { "New South Wales", "Queensland" };
-		String[][] capitals = new String[][] { { "Sydney", "Brisbane" },
-				{ "New South Wales", "Queensland" } };
+		String[][] capitals = new String[][] { { "Sydney", "Brisbane" }, { "New South Wales", "Queensland" } };
 
 		// System.out.println(states);
 		// will print [Ljava.lang.String;@54172f
-		assertEquals("[New South Wales, Queensland]", Arrays.asList(states)
-				.toString());
+		assertEquals("[New South Wales, Queensland]", Arrays.asList(states).toString());
 		assertEquals("[New South Wales, Queensland]", Arrays.toString(states));
 
 		// System.out.println(Arrays.toString(capitals));
 		// 2d array will print [[Ljava.lang.String;@18a47e0,
 		// [Ljava.lang.String;@174cc1f]
-		assertEquals("[[Sydney, Brisbane], [New South Wales, Queensland]]",
-				Arrays.deepToString(capitals));
+		assertEquals("[[Sydney, Brisbane], [New South Wales, Queensland]]", Arrays.deepToString(capitals));
 	}
 
 	@Test
@@ -254,7 +250,7 @@ public class TestCollections {
 		List<String> list = Collections.EMPTY_LIST;
 		assertEquals(0, list.size());
 
-		list = Collections.<String> emptyList();
+		list = Collections.<String>emptyList();
 		assertEquals(0, list.size());
 	}
 
@@ -271,7 +267,7 @@ public class TestCollections {
 			assertTrue(true);
 		}
 
-		list = Collections.<String> emptyList();
+		list = Collections.<String>emptyList();
 		assertEquals(0, list.size());
 
 		try {

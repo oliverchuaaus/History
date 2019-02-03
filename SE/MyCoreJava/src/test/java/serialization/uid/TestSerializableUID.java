@@ -18,8 +18,7 @@ public class TestSerializableUID {
 	public void testSerializeSimple() throws IOException {
 		SerializableWithNoUIDObject so = new SerializableWithNoUIDObject();
 		so.setField1("field1");
-		FileOutputStream fos = new FileOutputStream(RESOURCE
-				+ "SerializableWithNoUIDObject.ser");
+		FileOutputStream fos = new FileOutputStream(RESOURCE + "SerializableWithNoUIDObject.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		try {
 			oos.writeObject(so);
@@ -31,8 +30,7 @@ public class TestSerializableUID {
 
 	@Test
 	public void testDeserializeWithNoUID() throws IOException {
-		FileInputStream fis = new FileInputStream(RESOURCE
-				+ "SerializableWithNoUIDObject.ser");
+		FileInputStream fis = new FileInputStream(RESOURCE + "SerializableWithNoUIDObject.ser");
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		try {
 			ois.readObject();

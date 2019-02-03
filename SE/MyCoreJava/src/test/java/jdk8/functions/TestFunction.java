@@ -21,19 +21,19 @@ public class TestFunction {
 		Predicate<Developer> predicate = (d -> d.getAge() >= 18 && d.getAge() <= 25);
 		Developer developer = new Developer("Toffer", null, 18);
 		if (!predicate.test(developer)) {
-			fail("predicate should have return true");
+			fail("predicate failed");
 		}
 		developer = new Developer("Toffer", null, 26);
 		if (predicate.test(developer)) {
-			fail("predicate should have return false");
+			fail("predicate failed");
 		}
 	}
 
 	@Test
 	public void testFunction() {
-		Function<Developer, String> function = d -> d.getName();
+		Function<Developer, String> function = d -> "Hello " + d.getName();
 		Developer developer = new Developer("Toffer", null, 18);
-		assertEquals("Toffer", function.apply(developer));
+		assertEquals("Hello Toffer", function.apply(developer));
 	}
 
 	@Test
@@ -42,7 +42,6 @@ public class TestFunction {
 		Developer developer = new Developer("Toffer", null, 18);
 		consumer.accept(developer);
 		assertEquals("Toffer1", developer.getName());
-
 	}
 
 	@Test
@@ -54,8 +53,8 @@ public class TestFunction {
 
 	@Test
 	public void testBiFunction() {
-		BiFunction<Integer, Double, Double> function = (a, b) -> a + b;
-		assertEquals(Double.valueOf(3), function.apply(1, 2d));
+		BiFunction<Integer, Integer, Double> function = (a, b) -> (double) a + b;
+		assertEquals(Double.valueOf(3), function.apply(1, 2));
 	}
 
 	@Test

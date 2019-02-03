@@ -49,8 +49,7 @@ public class TestExceptionAntipatterns {
 		try {
 			try {
 				Exception e = new Exception(exceptionString);
-				StackTraceElement ste = new StackTraceElement("declaringClass",
-						"methodName", "fileName", 14344);
+				StackTraceElement ste = new StackTraceElement("declaringClass", "methodName", "fileName", 14344);
 				e.setStackTrace(new StackTraceElement[] { ste });
 				throw e;
 			} catch (Exception e) {
@@ -92,8 +91,7 @@ public class TestExceptionAntipatterns {
 
 	}
 
-	private void methodThatThrowsException(String exceptionString)
-			throws MyCheckedException {
+	private void methodThatThrowsException(String exceptionString) throws MyCheckedException {
 		throw new MyCheckedException(exceptionString);
 	}
 
@@ -111,8 +109,7 @@ public class TestExceptionAntipatterns {
 			try {
 				MyRuntimeException mre = new MyRuntimeException("my root cause");
 				Exception e = new Exception(exceptionString, mre);
-				StackTraceElement ste = new StackTraceElement("declaringClass",
-						"methodName", "fileName", 14344);
+				StackTraceElement ste = new StackTraceElement("declaringClass", "methodName", "fileName", 14344);
 				e.setStackTrace(new StackTraceElement[] { ste });
 				throw e;
 			} catch (Exception e) {
