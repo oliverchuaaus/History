@@ -3,8 +3,8 @@ package com.tougher.dto;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
-import com.tougher.app.dto.EmployeeDTO;
-import com.tougher.app.model.Employee;
+import com.tougher.app.v1.dto.EmployeeDTO;
+import com.tougher.app.v1.model.Employee;
 
 public class EmployeeDTOTest {
 	@Test

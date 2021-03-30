@@ -83,7 +83,6 @@ Components:
 				g. query with different combinations
 			Troubleshoot failing tests:
 				Add this to props to see param values: logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
-				How to log actual sql with values plugged in? - TODO!!!
 			How to set Test Data during test
 				https://techblog.dotdash.com/random-data-generators-for-api-testing-in-java-369c99075208
 					Random beans 
@@ -94,18 +93,18 @@ Components:
 			Need a script to drop and create tables. this will run every day as a job.
 			@SpringBootTest and test with a random port, so REST service can be tested without needing to connect to separate server
 			This will not roll back changes.
-		Pagination Support - TODO!!!
+		Pagination Support
+		Custom Repository
+			https://www.baeldung.com/spring-data-jpa-query
+			pageable
+			https://stackoverflow.com/questions/57789833/spring-data-jpa-custom-repository-with-pageable
+			https://stackoverflow.com/questions/41692097/jpa-criteriaquery-implements-spring-data-pageable-getsort
 		How to add custom method - TODO!!!
 			https://www.baeldung.com/spring-data-criteria-queries
 			Specification does not support checking for null criteria field so not useful
 		How to add named query - TODO!!!
 		How to use CriteriaBuilder - TODO!!!
 		Need complex JPQL queries for relationships	- TODO!!!
-		Custom Repository
-			https://www.baeldung.com/spring-data-jpa-query
-			pageable
-			https://stackoverflow.com/questions/57789833/spring-data-jpa-custom-repository-with-pageable
-			https://stackoverflow.com/questions/41692097/jpa-criteriaquery-implements-spring-data-pageable-getsort
 4. Model and DTO
 	Design Decisions:
 		No need to use interfaces.
@@ -141,21 +140,15 @@ Components:
 			https://stackoverflow.com/questions/47843039/how-to-properly-convert-domain-entities-to-dtos-while-considering-scalability
 			ModelMapper - api to map fields
 				https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
-				Issue: If an aggregate relation is all null, it is not mapped.
-				Issue: New field not in DTO, test doesn't fail
+
 		Json and Lombok recursion issue
 			If bidirectional, will get recursion runtime error. Add @JsonIgnore, @EqualsAndHashCode.Exclude, @ToString.Exclude to one side
-		Need Validation Support - TODO!!!
+		Need Validation Support
 			https://www.baeldung.com/spring-boot-bean-validation
 			Override default validation messages
 			Create custom validations
-			Issues encountered:
-			ConstraintViolationException thrown inside repo.save instead of MethodArgumentNotValidException in controller? 
-				Needs to be added to DTO and also Entity
-			Why Controller @Valid not checking recursively? 
-				Need to tag association field with @Valid to make it work 
-		Need standards for OneToOne, OneToMany and ManyToMany - TODO!!!
-		Need blob support
+		Need standards for OneToOne, OneToMany and ManyToMany
+		optional:Need blob support
 		optional:auditing
 		
 Tools:
@@ -184,8 +177,32 @@ how to handle db changes?
 investigate flyway
 tool to convert hbm.xml to jpa entities
 
+Profiles to switch between inmem and dev scratch db and local integration db
+dev-inmem	in mem (default)
+dev-tempdb 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp-scratch
+dev-integ 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp
+
+
 JPA
 https://www.baeldung.com/jpa-one-to-one			
 https://hellokoding.com/one-to-many-and-many-to-one-relationship-mapping-in-jpa-and-hibernate/			
 https://www.netsurfingzone.com/jpa/spring-data-jpa-jparepository-getone/
 	use getOne to not load referenced object
+
+
+Issues Encountered:
+Bean Validation
+	ConstraintViolationException thrown inside repo.save instead of MethodArgumentNotValidException in controller? 
+		Needs to be added to DTO and also Entity
+	Why Controller @Valid not checking recursively? 
+		Need to tag association field with @Valid to make it work 
+SQL Logging
+	https://www.baeldung.com/sql-logging-spring-boot
+JPA
+	data.sql not run - both lines needed
+	spring.jpa.hibernate.ddl-auto=update
+	spring.datasource.initialization-mode=always
+	https://stackoverflow.com/questions/45082574/spring-boot-doesnt-load-data-to-initialize-database-using-data-sql
+ModelMapper	
+	Issue: If an aggregate relation is all null, it is not mapped.
+	Issue: New field not in DTO, test doesn't fail

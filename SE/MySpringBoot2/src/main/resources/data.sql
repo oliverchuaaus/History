@@ -1,3 +1,12 @@
+delete from address;
+delete from professional_detail;
+delete from personal_detail;
+delete from employee_hobby;
+delete from employee;
+delete from work_detail;
+delete from occupation;
+delete from hobby;
+
 insert into occupation (id, occupation) values (1,'Programmer');
 
 insert into hobby (id, hobby) values (1,'Dancing');
@@ -16,4 +25,3 @@ INSERT INTO address (id, postcode, street, suburb, unit_number, employee_id) VAL
 
 INSERT INTO personal_detail (employee_id, detail, required_detail) VALUES(3, NULL, 'detail');
 INSERT INTO professional_detail (employee_id, detail) VALUES(3, 'detail');
-
