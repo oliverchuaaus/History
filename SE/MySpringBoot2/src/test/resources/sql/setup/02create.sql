@@ -1,0 +1,11 @@
+create table address (id bigint not null auto_increment, postcode varchar(4), street varchar(20), suburb varchar(20), unit_number varchar(20), employee_id bigint, primary key (id)) engine=InnoDB;
+create table employee (id bigint not null auto_increment, birthday DATE, first_name varchar(20), gender varchar(1), last_name varchar(20), occupation_id bigint, primary key (id)) engine=InnoDB;
+create table employee_hobby (employee_id bigint not null, hobby_id bigint not null) engine=InnoDB;
+create table hobby (id bigint not null auto_increment, hobby varchar(20), primary key (id)) engine=InnoDB;
+create table occupation (id bigint not null auto_increment, occupation varchar(20), primary key (id)) engine=InnoDB;
+create table personal_detail (employee_id bigint not null, detail varchar(20), required_detail varchar(20), primary key (employee_id)) engine=InnoDB;
+alter table address add constraint FK_ADDRESS_EMPLOYEE foreign key (employee_id) references employee (id);
+alter table employee add constraint FK_EMPLOYEE_OCCUPATION foreign key (occupation_id) references occupation (id);
+alter table employee_hobby add constraint FK_EMPLOYEE_HOBBY_HOBBY foreign key (hobby_id) references hobby (id);
+alter table employee_hobby add constraint FK_EMPLOYEE_HOBBY_EMPLOYEE foreign key (employee_id) references employee (id);
+alter table personal_detail add constraint FK_PERSONAL_DETAIL_EMPLOYEE foreign key (employee_id) references employee (id);

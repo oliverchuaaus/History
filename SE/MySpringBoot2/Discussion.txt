@@ -1,0 +1,191 @@
+Spring vs JEE? Spring is better
+
+Architecture:
+SPA connecting to
+Spring Boot REST
+
+REST:
+Tech Dependencies
+1. Spring Boot (2.4.4)
+2. Spring Data (2.4.6)
+	Spring Core (5.3.5)
+	Hibernate (5.4.29)
+3. JPA (2.2.3)
+
+
+
+Components:
+1. App
+	structure:
+		com.tougher.app - Application
+		com.tougher.app.controller - Controllers
+		com.tougher.app.service - Service
+		com.tougher.app.repo - Repository
+		com.tougher.app.dto.* - DTO, Search Criteria 
+		com.tougher.app.model - Entities
+		com.tougher.app.model.red - Reference Entities
+		com.tougher.app.model.enums - Enums
+1. Controller
+	Design Decisions:
+		Entry point via RESTful Services
+		Use Spring Boot
+		Do not Use Spring Data Rest: easy for demo purposes, but hard to restrict. Also, cannot save object graph in one transaction. i.e. create parent first then child
+		Return a different code for validation error, instead of returning errors as part of the response
+	Requirements:
+		Integration tests
+			Use RestTemplate as it has the most documentation.
+			Look to move to WebClient in the future
+			By default, transaction is committed.
+			To support rollback, DAO layer can be mocked (too tedious) or use in memory db - TODO!!!
+		Need to handle common exceptions - TODO!!!
+		Need to handle validation exceptions - TODO!!!
+		Need to handle multiple file uploads - TODO!!!
+		Need to handle security - TODO!!!
+		Need to support profiles for different envs - TODO!!!
+		Need to support versioning - TODO!!!
+		Be able to wrap as a war file and added to EAR 
+		Document rest services using swagger
+2. Service
+	Design Decisions:
+		Use best practice for naming REST service
+			
+	Requirements:
+		Will call DAO
+		Will perform validations
+	
+3. Repository
+	Design Decisions:
+		Use Spring Data Repository
+		Use JPA over Hibernate specific 		
+		Favour JPQL Over Criteria
+		Return objects for save, update and delete
+		Positional vs Named: named preferred easier to read if lots of fields
+	Requirements:
+		API to compare object fields
+			Assertj - Assertions.assertThat(emp2).usingRecursiveComparison().ignoringFieldsMatchingRegexes("id").isEqualTo(emp);
+		Test Strategy
+			For Repo test, use h2 inmem db for testing, so that easy to insert and delete records for one test and won't affect other tests
+			Start with empty db or a known state?
+		H2 inmem db
+			https://www.baeldung.com/h2-embedded-db-data-storage
+			How to setup test so it rolls back per test
+				@DataJpaTest https://reflectoring.io/spring-boot-data-jpa-test/ 
+			We cannot open h2 db in test
+			In case we need to examine db, we can write to real db and see records - TODO!!!
+				specify h2 as file, so can examine
+			Test scenarios
+				a. save Minimum (only required fields)
+				b. save Complete with no FKs
+				c. save Complete with FKs
+				d. update
+				e. delete
+				f. retrieve one
+				g. query with different combinations
+			Troubleshoot failing tests:
+				Add this to props to see param values: logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+				How to log actual sql with values plugged in? - TODO!!!
+			How to set Test Data during test
+				https://techblog.dotdash.com/random-data-generators-for-api-testing-in-java-369c99075208
+					Random beans 
+						Need to tweak short fields and excluded fields like FK
+						
+		Real db
+			Need a script to delete and insert statements, that will be run multiple times. This will put the db in a known state for integration tests
+			Need a script to drop and create tables. this will run every day as a job.
+			@SpringBootTest and test with a random port, so REST service can be tested without needing to connect to separate server
+			This will not roll back changes.
+		Pagination Support - TODO!!!
+		How to add custom method - TODO!!!
+			https://www.baeldung.com/spring-data-criteria-queries
+			Specification does not support checking for null criteria field so not useful
+		How to add named query - TODO!!!
+		How to use CriteriaBuilder - TODO!!!
+		Need complex JPQL queries for relationships	- TODO!!!
+		Custom Repository
+			https://www.baeldung.com/spring-data-jpa-query
+			pageable
+			https://stackoverflow.com/questions/57789833/spring-data-jpa-custom-repository-with-pageable
+			https://stackoverflow.com/questions/41692097/jpa-criteriaquery-implements-spring-data-pageable-getsort
+4. Model and DTO
+	Design Decisions:
+		No need to use interfaces.
+		Need to use DTO.
+		All ids should be Long
+		Use Lombok to reduce boilerplate code
+	Requirements:
+		Generate entities from Table
+			Use Eclipse JPA Tools
+			Tweaks needed for generated code:
+				Change primitives to Objects to support nullables
+			Tweaks needed for Mysql:
+				@Id needs these:
+					@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+                    @GenericGenerator(name = "native", strategy = "native")
+		Generate tables from Entities
+			https://www.baeldung.com/spring-data-jpa-generate-db-schema
+			guide was wrong, use https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h
+			Issue: if run multiple times and there are changes, appends instead of overwrites
+			Issue: if enabled, repo test does not auto create ddl
+		Use H2 In mem db
+			https://howtodoinjava.com/spring-boot2/h2-database-example/
+			https://reflectoring.io/spring-boot-data-jpa-test/#using-schemasql
+				data.sql is run but if ddl-auto is create-drop, then it runs after data.sql. fix is to make it @DataJpaTest(properties = {"spring.jpa.hibernate.ddl-auto=validate"})
+				Better workaround is to use @Sql(/init.sql) on the test method
+			Cannot access H2 in-mem-db as part of test
+				https://stackoverflow.com/questions/45302132/h2-not-creating-updating-table-in-my-spring-boot-app-somethings-wrong-with-my
+		Support LocalDate
+		Mapping
+			Enum - https://www.baeldung.com/jpa-persisting-enums-in-jpa
+			LocalDate - https://www.baeldung.com/jpa-java-time
+		DTO Design
+			https://stackoverflow.com/questions/47843039/how-to-properly-convert-domain-entities-to-dtos-while-considering-scalability
+			ModelMapper - api to map fields
+				https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+				Issue: If an aggregate relation is all null, it is not mapped.
+				Issue: New field not in DTO, test doesn't fail
+		Json and Lombok recursion issue
+			If bidirectional, will get recursion runtime error. Add @JsonIgnore, @EqualsAndHashCode.Exclude, @ToString.Exclude to one side
+		Need Validation Support - TODO!!!
+			https://www.baeldung.com/spring-boot-bean-validation
+			Override default validation messages
+			Create custom validations
+			Issues encountered:
+			ConstraintViolationException thrown inside repo.save instead of MethodArgumentNotValidException in controller? 
+				Needs to be added to DTO and also Entity
+			Why Controller @Valid not checking recursively? 
+				Need to tag association field with @Valid to make it work 
+		Need standards for OneToOne, OneToMany and ManyToMany - TODO!!!
+		Need blob support
+		optional:auditing
+		
+Tools:
+Eclipse plugins:
+	Lombok - https://projectlombok.org/p2
+		for boilerplate code class gen
+via marketplace:
+	SQL Editor 
+		syntax lighting	
+	DBeaver?
+	
+Misc:	
+Spring Data Rest
+	IDs not returned in post by default
+		https://stackoverflow.com/questions/44046659/return-ids-in-json-response-from-spring-data-rest
+RepoTest
+	@AutoConfigureTestDatabase(replace = Replace.NONE) to connect to real db instead of in memory
+
+Find a way to invoke services packaged in a jar
+
+db questions:
+Is it a good idea to use incremental db changes framework?
+separate shared db project or db part of the build?
+	better part of build, so changes can be tested
+how to handle db changes?
+investigate flyway
+tool to convert hbm.xml to jpa entities
+
+JPA
+https://www.baeldung.com/jpa-one-to-one			
+https://hellokoding.com/one-to-many-and-many-to-one-relationship-mapping-in-jpa-and-hibernate/			
+https://www.netsurfingzone.com/jpa/spring-data-jpa-jparepository-getone/
+	use getOne to not load referenced object

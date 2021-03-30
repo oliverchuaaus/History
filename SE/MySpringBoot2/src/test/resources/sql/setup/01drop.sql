@@ -1,0 +1,11 @@
+alter table address drop foreign key FK_ADDRESS_EMPLOYEE;
+alter table employee drop foreign key FK_EMPLOYEE_OCCUPATION;
+alter table employee_hobby drop foreign key FK_EMPLOYEE_HOBBY_HOBBY;
+alter table employee_hobby drop foreign key FK_EMPLOYEE_HOBBY_EMPLOYEE;
+alter table personal_detail drop foreign key FK_PERSONAL_DETAIL_EMPLOYEE;
+drop table if exists address;
+drop table if exists employee;
+drop table if exists employee_hobby;
+drop table if exists hobby;
+drop table if exists occupation;
+drop table if exists personal_detail;
