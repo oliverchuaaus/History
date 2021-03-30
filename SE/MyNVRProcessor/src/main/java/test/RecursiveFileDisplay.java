@@ -14,8 +14,8 @@ public class RecursiveFileDisplay {
 		File input = new File("src/test/resources/input"); // input directory
 		File output = new File("src/test/resources/output"); // output directory
 		*/
-		File input = new File("g:/NVR"); // input directory
-		File output = new File("g:/output"); // output directory
+		File input = new File("h:/NVR"); // input directory
+		File output = new File("h:/output"); // output directory
 		
 		displayDirectoryContents(input, output);
 	}

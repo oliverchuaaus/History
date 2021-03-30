@@ -56,4 +56,29 @@ public class Developer {
 		return a.salary.compareTo(b.salary);
 	}
 
+	public int getYearsBeforeRetirement() {
+		return 65 - age;
+	}
+
+	public boolean moreThan40YearsBeforeRetirement() {
+		return 65 - age > 40;
+	}
+
+	public int getYearsBeforeRetirement(int retirementAge) {
+		return retirementAge - age;
+	}
+
+	public boolean moreThan40YearsBeforeRetirement(int retirementAge) {
+		return retirementAge - age > 40;
+	}
+	
+	public boolean moreThanNYearsBeforeRetirement(int retirementAge, int years) {
+		return retirementAge - age > years;
+	}
+
+}
+
+
+interface TriFunction<T, U, V, R>{ 
+	R apply(T t,U u,V v);
 }

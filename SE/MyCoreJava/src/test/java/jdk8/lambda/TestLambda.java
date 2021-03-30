@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -74,6 +77,7 @@ public class TestLambda {
 	public void testLambdaMethodReference() {
 		List<Developer> developerList = TestHelper.getDevelopers();
 
+		// Static method
 		TestHelper.printList(developerList);
 		developerList.sort(Developer::compareByAge);
 		TestHelper.printList(developerList);
@@ -84,6 +88,51 @@ public class TestLambda {
 
 		TestHelper.printList(developerList);
 		developerList.sort(Developer::compareBySalary);
+		TestHelper.printList(developerList);
+
+
+	}
+
+	@Test
+	public void testLambdaMethodReferenceInstance() {
+		List<Developer> developerList = TestHelper.getDevelopers();
+
+		// Instance method, no args
+		developerList = developerList.stream().filter(d -> d.moreThan40YearsBeforeRetirement())
+				.collect(Collectors.toList());
+		TestHelper.printList(developerList);
+
+		developerList = developerList.stream().filter(Developer::moreThan40YearsBeforeRetirement)
+				.collect(Collectors.toList());
+		TestHelper.printList(developerList);
+		
+		// Different sort of pattern
+		TestHelper.printList(developerList);
+		developerList.forEach(d -> System.out.println(d));
+		
+		TestHelper.printList(developerList);
+		developerList.forEach(System.out::println);
+		
+		Consumer<Object> consumer = System.out::println;
+		consumer.accept("Hello World");
+
+		// Instance method, 1 arg
+		BiFunction<Developer, Integer, Boolean> biFunction = (d, i) -> d.moreThan40YearsBeforeRetirement(i);
+		developerList = developerList.stream().filter(d -> biFunction.apply(d, 74)).collect(Collectors.toList());
+		TestHelper.printList(developerList);
+
+		BiFunction<Developer, Integer, Boolean> biFunction2 = Developer::moreThan40YearsBeforeRetirement;
+		developerList = developerList.stream().filter(d -> biFunction2.apply(d, 74)).collect(Collectors.toList());
+		TestHelper.printList(developerList);
+		
+		// Instance method, 2 args
+		TriFunction<Developer, Integer, Integer, Boolean> triFunction = (d, i, y) -> d.moreThanNYearsBeforeRetirement(i,
+				y);
+		developerList = developerList.stream().filter(d -> triFunction.apply(d, 74, 41)).collect(Collectors.toList());
+		TestHelper.printList(developerList);
+
+		TriFunction<Developer, Integer, Integer, Boolean> triFunction2 = Developer::moreThanNYearsBeforeRetirement;
+		developerList = developerList.stream().filter(d -> triFunction2.apply(d, 74, 41)).collect(Collectors.toList());
 		TestHelper.printList(developerList);
 	}
 
