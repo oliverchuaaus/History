@@ -1,8 +1,7 @@
 Spring vs JEE? Spring is better
 
 Architecture:
-SPA connecting to
-Spring Boot REST
+SPA connecting to Spring Boot REST
 
 REST:
 Tech Dependencies
@@ -18,13 +17,11 @@ Components:
 1. App
 	structure:
 		com.tougher.app - Application
-		com.tougher.app.controller - Controllers
-		com.tougher.app.service - Service
-		com.tougher.app.repo - Repository
-		com.tougher.app.dto.* - DTO, Search Criteria 
-		com.tougher.app.model - Entities
-		com.tougher.app.model.red - Reference Entities
-		com.tougher.app.model.enums - Enums
+		com.tougher.app.v1.controller - Controllers
+		com.tougher.app.v1.service - Service
+		com.tougher.app.v1.repo.* - (util) Repository, Custom Repos
+		com.tougher.app.v1.dto.* - (criteria, enums, ref) DTO, Search Criteria 
+		com.tougher.app.v1.model.* - (enums, ref) Entities
 1. Controller
 	Design Decisions:
 		Entry point via RESTful Services
@@ -36,13 +33,17 @@ Components:
 			Use RestTemplate as it has the most documentation.
 			Look to move to WebClient in the future
 			By default, transaction is committed.
-			To support rollback, DAO layer can be mocked (too tedious) or use in memory db - TODO!!!
-		Need to handle common exceptions - TODO!!!
-		Need to handle validation exceptions - TODO!!!
-		Need to handle multiple file uploads - TODO!!!
-		Need to handle security - TODO!!!
-		Need to support profiles for different envs - TODO!!!
-		Need to support versioning - TODO!!!
+			To support rollback, use in memory db. Mocking repo layer too tedious
+		Support common exceptions - TODOlater!!!
+			https://www.baeldung.com/exception-handling-for-rest-with-spring
+		Support validation exceptions
+			Return hash maps of errors, status code = 400
+		Support  multiple file uploads - TODOlater!!!
+		Support security - TODOlater!!!
+		Need to support profiles for different envs
+		Need to support versioning
+			add one package level for version, e.g. v1, starting from controller.
+			duplicate from controller to bottom and add as v2
 		Be able to wrap as a war file and added to EAR 
 		Document rest services using swagger
 2. Service
@@ -69,10 +70,11 @@ Components:
 		H2 inmem db
 			https://www.baeldung.com/h2-embedded-db-data-storage
 			How to setup test so it rolls back per test
-				@DataJpaTest https://reflectoring.io/spring-boot-data-jpa-test/ 
+				https://reflectoring.io/spring-boot-data-jpa-test/ 
+				@DataJpaTest 
 			We cannot open h2 db in test
-			In case we need to examine db, we can write to real db and see records - TODO!!!
-				specify h2 as file, so can examine
+			In case we need to examine db, we can write to real db and see records
+				use h2 by default (auto-ddl), specify profile for tempdb (mysql auto-ddl), another for integration (mysql)
 			Test scenarios
 				a. save Minimum (only required fields)
 				b. save Complete with no FKs
@@ -122,9 +124,6 @@ Components:
                     @GenericGenerator(name = "native", strategy = "native")
 		Generate tables from Entities
 			https://www.baeldung.com/spring-data-jpa-generate-db-schema
-			guide was wrong, use https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h
-			Issue: if run multiple times and there are changes, appends instead of overwrites
-			Issue: if enabled, repo test does not auto create ddl
 		Use H2 In mem db
 			https://howtodoinjava.com/spring-boot2/h2-database-example/
 			https://reflectoring.io/spring-boot-data-jpa-test/#using-schemasql
@@ -140,16 +139,13 @@ Components:
 			https://stackoverflow.com/questions/47843039/how-to-properly-convert-domain-entities-to-dtos-while-considering-scalability
 			ModelMapper - api to map fields
 				https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
-
-		Json and Lombok recursion issue
-			If bidirectional, will get recursion runtime error. Add @JsonIgnore, @EqualsAndHashCode.Exclude, @ToString.Exclude to one side
 		Need Validation Support
 			https://www.baeldung.com/spring-boot-bean-validation
 			Override default validation messages
 			Create custom validations
 		Need standards for OneToOne, OneToMany and ManyToMany
-		optional:Need blob support
-		optional:auditing
+		Need blob support TODOlater!!!
+		Need auditing TODOlater!!!
 		
 Tools:
 Eclipse plugins:
@@ -169,6 +165,7 @@ RepoTest
 
 Find a way to invoke services packaged in a jar
 
+TO RESEARCH
 db questions:
 Is it a good idea to use incremental db changes framework?
 separate shared db project or db part of the build?
@@ -177,8 +174,10 @@ how to handle db changes?
 investigate flyway
 tool to convert hbm.xml to jpa entities
 
+Implement mocking for 3rd party services
+
 Profiles to switch between inmem and dev scratch db and local integration db
-dev-inmem	in mem (default)
+dev-inmem	in mem db(default)
 dev-tempdb 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp-scratch
 dev-integ 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp
 
@@ -204,5 +203,13 @@ JPA
 	spring.datasource.initialization-mode=always
 	https://stackoverflow.com/questions/45082574/spring-boot-doesnt-load-data-to-initialize-database-using-data-sql
 ModelMapper	
-	Issue: If an aggregate relation is all null, it is not mapped.
-	Issue: New field not in DTO, test doesn't fail
+	If an aggregate relation is all null, it is not mapped.
+	New field not in DTO, test doesn't fail
+Generate DB Schema from Entities
+	guide was wrong, use https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h
+	if run multiple times and there are changes, appends instead of overwrites
+	if enabled, repo test does not auto create ddl
+Lombok
+	If bidirectional, will get recursion runtime error. Add @EqualsAndHashCode.Exclude, @ToString.Exclude to one side	
+Jackson
+	If bidirectional, will get recursion runtime error. Add @JsonIgnore to one side		

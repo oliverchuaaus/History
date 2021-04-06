@@ -1,4 +1,4 @@
-package com.tougher.dto;
+package com.tougher.v1.dto;
 
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
