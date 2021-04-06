@@ -3,6 +3,7 @@ package com.tougher.app.v1.repo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,67 @@ public class EmployeeRepositoryTest {
 	public void findAll() {
 		List<Employee> emps = repo.findAll();
 		assertEquals(3, emps.size());
+	}
+
+	@Test
+	public void findAllMaleEmployees() {
+		List<Employee> emps = repo.findAllMaleEmployees();
+		assertEquals(2, emps.size());
+	}
+
+	@Test
+	public void findByGenders() {
+		List<Gender> genders = new ArrayList<Gender>();
+		genders.add(Gender.MALE);
+		List<Employee> emps = repo.findByGenders(genders);
+		assertEquals(2, emps.size());
+
+		genders.add(Gender.FEMALE);
+		emps = repo.findByGenders(genders);
+		assertEquals(2, emps.size());
+
+		genders.remove(0);
+		emps = repo.findByGenders(genders);
+		assertEquals(0, emps.size());
+
+		genders.remove(0);
+		emps = repo.findByGenders(genders);
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void findByBirthday() {
+		LocalDate fromDate = LocalDate.of(1977, 6, 20);
+		LocalDate toDate = LocalDate.of(1977, 6, 20);
+		List<Employee> emps = repo.findByBirthday(fromDate, toDate);
+		assertEquals(2, emps.size());
+
+		fromDate = LocalDate.of(1977, 6, 19);
+		toDate = LocalDate.of(1977, 6, 21);
+		emps = repo.findByBirthday(fromDate, toDate);
+		assertEquals(2, emps.size());
+
+		// Not transitive
+		fromDate = LocalDate.of(1977, 6, 21);
+		toDate = LocalDate.of(1977, 6, 19);
+		emps = repo.findByBirthday(fromDate, toDate);
+		assertEquals(0, emps.size());
+
+		fromDate = LocalDate.of(1977, 6, 21);
+		toDate = LocalDate.of(1977, 6, 21);
+		emps = repo.findByBirthday(fromDate, toDate);
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void findFirstName() {
+		String name = "oli";
+		List<Employee> emps = repo.findFirstName(name);
+		assertEquals(2, emps.size());
+
+		name = "olio";
+		emps = repo.findFirstName(name);
+		assertEquals(0, emps.size());
 	}
 
 	@Test

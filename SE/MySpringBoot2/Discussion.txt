@@ -104,7 +104,8 @@ Components:
 		How to add custom method - TODO!!!
 			https://www.baeldung.com/spring-data-criteria-queries
 			Specification does not support checking for null criteria field so not useful
-		How to add named query - TODO!!!
+		How to add named query
+			https://thorben-janssen.com/spring-data-jpa-named-queries/
 		How to use CriteriaBuilder - TODO!!!
 		Need complex JPQL queries for relationships	- TODO!!!
 4. Model and DTO
@@ -156,13 +157,8 @@ via marketplace:
 		syntax lighting	
 	DBeaver?
 	
-Misc:	
-Spring Data Rest
-	IDs not returned in post by default
-		https://stackoverflow.com/questions/44046659/return-ids-in-json-response-from-spring-data-rest
-RepoTest
-	@AutoConfigureTestDatabase(replace = Replace.NONE) to connect to real db instead of in memory
 
+	
 Find a way to invoke services packaged in a jar
 
 TO RESEARCH
@@ -173,14 +169,38 @@ separate shared db project or db part of the build?
 how to handle db changes?
 investigate flyway
 tool to convert hbm.xml to jpa entities
-
 Implement mocking for 3rd party services
 
-Profiles to switch between inmem and dev scratch db and local integration db
+
+
+Testing Environment Strategy:
+Use Profiles to switch between inmem and dev scratch db and local integration db
 dev-inmem	in mem db(default)
 dev-tempdb 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp-scratch
 dev-integ 	spring.datasource.url=jdbc:mysql://localhost:3306/myapp
 
+src/main/resources/data.sql needs to have delete then insert so it can be rerunnable if ddl-auto is update
+
+1. Default is h2
+This will run src/main/resources/data.sql
+
+2. Specify profile tempdb to run with mysql scratch db
+This will run src/main/resources/data.sql
+
+spring.datasource.initialization-mode is required because data.sql is run only by default for in mem db.
+spring.datasource.url=jdbc:mysql://localhost:3306/myapp-scratch
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.initialization-mode=always
+
+3. Specify profile integ to connect with mysql integration db
+This will NOT run src/main/resources/data.sql
+Running the tests with this profile will result in failures
+
+spring.datasource.url=jdbc:mysql://localhost:3306/myapp
+spring.datasource.username=root
+spring.datasource.password=root
 
 JPA
 https://www.baeldung.com/jpa-one-to-one			
@@ -213,3 +233,9 @@ Lombok
 	If bidirectional, will get recursion runtime error. Add @EqualsAndHashCode.Exclude, @ToString.Exclude to one side	
 Jackson
 	If bidirectional, will get recursion runtime error. Add @JsonIgnore to one side		
+RepoTest
+	@AutoConfigureTestDatabase(replace = Replace.NONE) to connect to real db instead of in memory
+	if no db specified, will still use in mem db
+h2 vs MySql
+	https://medium.com/@skywalkerhunter/quick-tip-use-concat-in-your-h2-mysql-jpql-queries-instead-of-2b0ccef63e90
+	use concat instead of ||	

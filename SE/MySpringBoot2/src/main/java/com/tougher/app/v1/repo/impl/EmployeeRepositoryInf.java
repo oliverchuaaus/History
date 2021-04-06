@@ -1,4 +1,4 @@
-package com.tougher.app.v1.repo.util;
+package com.tougher.app.v1.repo.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

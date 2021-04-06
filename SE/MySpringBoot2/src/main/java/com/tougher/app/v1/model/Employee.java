@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,6 +32,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "Employee")
+//See how to use LIKE in query
+@NamedQuery(name="Employee.findFirstName", query = "SELECT e FROM Employee e WHERE lower(e.firstName) LIKE concat('%', lower(:name),'%') ")
 public @Data class Employee {
 
 	@Id

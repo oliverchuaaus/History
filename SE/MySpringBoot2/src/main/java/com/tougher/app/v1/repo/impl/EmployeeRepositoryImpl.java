@@ -1,4 +1,4 @@
-package com.tougher.app.v1.repo.util;
+package com.tougher.app.v1.repo.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -22,26 +22,26 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryInf {
 	@Override
 	public Page<Employee> findByCriteria(EmployeeSearchCriteriaDTO dto, Pageable pageable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Employee> query = cb.createQuery(Employee.class);
-		Root<Employee> employee = query.from(Employee.class);
+		CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
+		Root<Employee> employee = cq.from(Employee.class);
 
 		/*
 		 * Path<String> hobbyPath = employee.get("hobbies[].id"); List<Predicate>
 		 * predicates = new ArrayList<>(); for (String hobby : dto.getHobbyList()) {
 		 * predicates.add(cb.like(hobbyPath, hobby)); }
 		 */
-		query = query.select(employee);
-
-		TypedQuery<Employee> q = em.createQuery(query);
 
 		if (pageable.getSort() != null) {
-			query.orderBy(QueryUtils.toOrders(pageable.getSort(), employee, cb));
+			cq.orderBy(QueryUtils.toOrders(pageable.getSort(), employee, cb));
 		}
-		q.setMaxResults(pageable.getPageSize());
-		q.setFirstResult((int) pageable.getOffset());
+		
+		TypedQuery<Employee> tq = em.createQuery(cq);
+		tq.setMaxResults(pageable.getPageSize());
+		tq.setFirstResult((int) pageable.getOffset());
 
-		int total = q.getResultList().size();
-		return new PageImpl<Employee>(q.getResultList(), pageable, total);
+		//This needs to select count
+		int total = tq.getResultList().size();
+		return new PageImpl<Employee>(tq.getResultList(), pageable, total);
 	}
 
 }
