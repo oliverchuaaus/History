@@ -2,7 +2,8 @@ package com.tougher.app.v1.dto;
 
 import lombok.Data;
 
-public @Data class WorkDetailDTO {
+@Data
+public class WorkDetailDTO {
 
 	private Long id;
 

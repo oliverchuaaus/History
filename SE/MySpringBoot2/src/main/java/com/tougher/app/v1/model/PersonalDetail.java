@@ -17,7 +17,8 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "Personal_Detail")
-public @Data class PersonalDetail {
+@Data
+public class PersonalDetail {
 
 	@Id
 	@Column(name = "employee_id")

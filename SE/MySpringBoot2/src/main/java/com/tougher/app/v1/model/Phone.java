@@ -11,7 +11,8 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 
 @Entity
-public @Data class Phone {
+@Data
+public class Phone {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")

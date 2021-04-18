@@ -6,7 +6,8 @@ import com.tougher.app.v1.dto.EmployeeDTO;
 
 import lombok.Data;
 
-public @Data class EmployeeSearchResultDTO {
+@Data
+public class EmployeeSearchResultDTO {
 	private List<EmployeeDTO> employeeList;
 	private PageResultMetadataDTO metadata;
 }

@@ -1,5 +1,6 @@
 package com.tougher.app.v1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.NullHandling;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.tougher.app.v1.dto.EmployeeDTO;
 import com.tougher.app.v1.dto.criteria.EmployeeSearchCriteriaDTO;
 import com.tougher.app.v1.dto.criteria.EmployeeSearchResultDTO;
 import com.tougher.app.v1.dto.criteria.PageableDTO;
+import com.tougher.app.v1.dto.criteria.PageableDTO.SortDTO.OrderDTO;
 import com.tougher.app.v1.model.Employee;
 import com.tougher.app.v1.repo.EmployeeRepository;
 import com.tougher.app.v1.repo.HobbyRepository;
@@ -41,11 +46,6 @@ public class EmployeeService {
 		return convertToDto(employee);
 	}
 
-	public List<EmployeeDTO> findAll() {
-		List<Employee> list = employeeRepo.findAll();
-		return list.stream().map(this::convertToDto).collect(Collectors.toList());
-	}
-
 	public EmployeeSearchResultDTO findByCriteria(EmployeeSearchCriteriaDTO criteria) {
 		Sort sort = Sort.unsorted();
 		if (criteria.getPageable() != null && criteria.getPageable().getSort() != null) {
@@ -68,7 +68,14 @@ public class EmployeeService {
 	}
 
 	private Sort convertToEntity(PageableDTO.SortDTO dto) {
-		return modelMapper.map(dto, Sort.class);
+		List<OrderDTO> dtoList = dto.getOrderList();
+		List<Order> orderList = new ArrayList<Order>();
+		for (OrderDTO orderDTO : dtoList) {
+			Order order = new Order(Direction.valueOf(orderDTO.getDirection().name()), orderDTO.getProperty(),
+					NullHandling.valueOf(orderDTO.getNullHandling().name()));
+			orderList.add(order);
+		}
+		return Sort.by(orderList);
 	}
 
 	private Employee convertToEntity(EmployeeDTO employeeDTO) {

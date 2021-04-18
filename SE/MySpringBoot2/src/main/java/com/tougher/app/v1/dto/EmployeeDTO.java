@@ -7,13 +7,13 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.tougher.app.v1.dto.enums.GenderDTO;
 import com.tougher.app.v1.dto.ref.HobbyDTO;
 import com.tougher.app.v1.dto.ref.OccupationDTO;
 
 import lombok.Data;
 
-public @Data class EmployeeDTO {
+@Data
+public class EmployeeDTO {
 
 	private Long id;
 	@NotNull
@@ -21,7 +21,7 @@ public @Data class EmployeeDTO {
 
 	private String lastName;
 
-	private GenderDTO gender;
+	private String gender;
 
 	private LocalDate birthday;
 

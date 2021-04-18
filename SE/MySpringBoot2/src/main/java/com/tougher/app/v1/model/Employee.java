@@ -33,8 +33,9 @@ import lombok.Data;
 @Entity
 @Table(name = "Employee")
 //See how to use LIKE in query
-@NamedQuery(name="Employee.findFirstName", query = "SELECT e FROM Employee e WHERE lower(e.firstName) LIKE concat('%', lower(:name),'%') ")
-public @Data class Employee {
+@NamedQuery(name = "Employee.findFirstName", query = "SELECT e FROM Employee e WHERE lower(e.firstName) LIKE concat('%', lower(:name),'%') ")
+@Data
+public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")

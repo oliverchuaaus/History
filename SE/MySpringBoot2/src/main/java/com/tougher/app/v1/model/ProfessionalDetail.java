@@ -20,7 +20,8 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "Professional_Detail")
-public @Data class ProfessionalDetail {
+@Data
+public class ProfessionalDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")

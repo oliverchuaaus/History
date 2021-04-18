@@ -4,7 +4,8 @@ import java.util.List;
 
 import lombok.Data;
 
-public @Data class PageableDTO {
+@Data
+public class PageableDTO {
 	private Integer offset;
 	private Integer pageSize;
 	private SortDTO sort;
@@ -12,37 +13,24 @@ public @Data class PageableDTO {
 	public PageableDTO() {
 	}
 
-	public PageableDTO(Integer offset, Integer pageSize, SortDTO sort) {
-		this.offset = offset;
-		this.pageSize = pageSize;
-		this.sort = sort;
-	}
-
-	public PageableDTO(Integer offset, Integer pageSize) {
-		this.offset = offset;
-		this.pageSize = pageSize;
-	}
-
-	public static PageableDTO of(Integer offset, Integer pageSize) {
-		return new PageableDTO(offset, pageSize);
-	}
-
-	public static @Data class SortDTO {
+	@Data
+	public static class SortDTO {
 		private List<OrderDTO> orderList;
 
-		private static enum DirectionDTO {
+		public static enum DirectionDTO {
 			ASC, DESC
 		}
 
-		private static enum NullHandlingDTO {
+		public static enum NullHandlingDTO {
 			NATIVE, NULLS_FIRST, NULLS_LAST;
 		}
 
-		public @Data class OrderDTO {
-			private DirectionDTO direction;
+		@Data
+		public static class OrderDTO {
+			private DirectionDTO direction = DirectionDTO.ASC;
 			private String property;
 			private boolean ignoreCase;
-			private NullHandlingDTO nullHandling;
+			private NullHandlingDTO nullHandling = NullHandlingDTO.NULLS_FIRST;
 		}
 	}
 }

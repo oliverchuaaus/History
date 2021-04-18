@@ -2,7 +2,8 @@ package com.tougher.app.v1.dto;
 
 import lombok.Data;
 
-public @Data class ProfessionalDetailDTO {
+@Data
+public class ProfessionalDetailDTO {
 
 	private Long id;
 

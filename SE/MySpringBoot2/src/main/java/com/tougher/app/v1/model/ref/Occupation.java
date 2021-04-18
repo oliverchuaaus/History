@@ -13,7 +13,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "Occupation")
-public @Data class Occupation {
+@Data
+public class Occupation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")

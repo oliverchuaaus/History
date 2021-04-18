@@ -1,9 +1,10 @@
 package com.tougher.app.v1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
@@ -27,7 +28,9 @@ import com.tougher.app.v1.dto.ProfessionalDetailDTO;
 import com.tougher.app.v1.dto.WorkDetailDTO;
 import com.tougher.app.v1.dto.criteria.EmployeeSearchCriteriaDTO;
 import com.tougher.app.v1.dto.criteria.EmployeeSearchResultDTO;
-import com.tougher.app.v1.dto.enums.GenderDTO;
+import com.tougher.app.v1.dto.criteria.PageableDTO;
+import com.tougher.app.v1.dto.criteria.PageableDTO.SortDTO;
+import com.tougher.app.v1.dto.criteria.PageableDTO.SortDTO.NullHandlingDTO;
 import com.tougher.app.v1.dto.ref.HobbyDTO;
 import com.tougher.app.v1.dto.ref.OccupationDTO;
 
@@ -53,17 +56,32 @@ public class EmployeeRestTest {
 
 	@Test
 	public void saveCompleteWithFKsBadValidation() throws JsonMappingException, JsonProcessingException {
-		EmployeeDTO emp = createCompleteWithFKs();
+		EmployeeDTO emp;
+		ResponseEntity<String> response;
+		ObjectMapper objectMapper;
+		Map<String, String> error;
+		
+		emp = createCompleteWithFKs();
 		emp.setFirstName(null);
 		emp.getAddresses().get(0).setPostcode(null);
-		ResponseEntity<String> response = rest.postForEntity(getURL(), emp, String.class);
+		response = rest.postForEntity(getURL(), emp, String.class);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, String> error = objectMapper.readValue(response.getBody(),
+		objectMapper = new ObjectMapper();
+		error = objectMapper.readValue(response.getBody(),
 				new TypeReference<Map<String, String>>() {
 				});
 		assertEquals("must not be null", error.get("firstName"));
 		assertEquals("must not be null", error.get("addresses[0].postcode"));
+		
+		emp = createCompleteWithFKs();
+		emp.getAddresses().get(0).setSuburb("1234567890123456789012345678901");
+		response = rest.postForEntity(getURL(), emp, String.class);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		objectMapper = new ObjectMapper();
+		error = objectMapper.readValue(response.getBody(),
+				new TypeReference<Map<String, String>>() {
+				});
+		assertEquals("size must be between 0 and 30", error.get("suburb"));
 	}
 
 	@Test
@@ -80,15 +98,30 @@ public class EmployeeRestTest {
 
 	@Test
 	public void findByCriteria() {
-		// Create one
-		EmployeeDTO emp = createCompleteWithFKs();
-		rest.postForEntity(getURL(), emp, EmployeeDTO.class).getBody();
-
 		// Check at least one
-		EmployeeSearchCriteriaDTO criteria = new EmployeeSearchCriteriaDTO();
-		EmployeeSearchResultDTO result = rest
-				.postForEntity(getURL() + "search", criteria, EmployeeSearchResultDTO.class).getBody();
-		assertTrue(result.getEmployeeList().size() > 1);
+		EmployeeSearchCriteriaDTO criteria;
+		EmployeeSearchResultDTO result;
+
+		criteria = new EmployeeSearchCriteriaDTO();
+		result = rest.postForEntity(getURL() + "search", criteria, EmployeeSearchResultDTO.class).getBody();
+		assertEquals(3, result.getEmployeeList().size());
+		
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setPageable(new PageableDTO());
+		criteria.getPageable().setPageSize(1);
+		criteria.getPageable().setOffset(0);
+		criteria.getPageable().setSort(new SortDTO());
+		List<PageableDTO.SortDTO.OrderDTO> list= new ArrayList<PageableDTO.SortDTO.OrderDTO>();
+		PageableDTO.SortDTO.OrderDTO order = new PageableDTO.SortDTO.OrderDTO();
+		order.setDirection(PageableDTO.SortDTO.DirectionDTO.ASC);
+		order.setProperty("lastName");
+		order.setNullHandling(NullHandlingDTO.NULLS_FIRST);
+		list.add(order);
+		
+		criteria.getPageable().getSort().setOrderList(list);
+		result = rest.postForEntity(getURL() + "search", criteria, EmployeeSearchResultDTO.class).getBody();
+		assertEquals(1, result.getEmployeeList().size());
+
 	}
 
 	private EmployeeDTO createMinimal() {
@@ -101,7 +134,7 @@ public class EmployeeRestTest {
 		EmployeeDTO emp = createMinimal();
 		emp.setLastName("Chua");
 		emp.setBirthday(LocalDate.of(1977, 6, 20));
-		emp.setGender(GenderDTO.MALE);
+		emp.setGender("MALE");
 		return emp;
 	}
 

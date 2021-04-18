@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,7 +18,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "Address")
-public @Data class Address {
+@Data
+public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -29,6 +31,7 @@ public @Data class Address {
 	@Column(length = 20)
 	private String street;
 	@Column(length = 20)
+	@Size(max = 30)
 	private String suburb;
 	@Column(length = 4)
 	@NotNull

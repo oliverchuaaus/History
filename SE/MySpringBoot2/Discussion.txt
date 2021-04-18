@@ -101,13 +101,14 @@ Components:
 			pageable
 			https://stackoverflow.com/questions/57789833/spring-data-jpa-custom-repository-with-pageable
 			https://stackoverflow.com/questions/41692097/jpa-criteriaquery-implements-spring-data-pageable-getsort
-		How to add custom method - TODO!!!
+		How to add custom method
 			https://www.baeldung.com/spring-data-criteria-queries
-			Specification does not support checking for null criteria field so not useful
+			CriteriaBuilder
+			Specification
 		How to add named query
 			https://thorben-janssen.com/spring-data-jpa-named-queries/
-		How to use CriteriaBuilder - TODO!!!
 		Need complex JPQL queries for relationships	- TODO!!!
+		Solve n+1 issue - TODO!!!
 4. Model and DTO
 	Design Decisions:
 		No need to use interfaces.
@@ -213,6 +214,7 @@ Issues Encountered:
 Bean Validation
 	ConstraintViolationException thrown inside repo.save instead of MethodArgumentNotValidException in controller? 
 		Needs to be added to DTO and also Entity
+		Entity message key is relative to object only. DTO message key is relative to object graph (e.g. suburb vs addresses[0].suburb) 
 	Why Controller @Valid not checking recursively? 
 		Need to tag association field with @Valid to make it work 
 SQL Logging
@@ -230,7 +232,7 @@ Generate DB Schema from Entities
 	if run multiple times and there are changes, appends instead of overwrites
 	if enabled, repo test does not auto create ddl
 Lombok
-	If bidirectional, will get recursion runtime error. Add @EqualsAndHashCode.Exclude, @ToString.Exclude to one side	
+	If bidirectional, will get recursion runtime error. Add @EqualsAndHashCode.Exclude, @ToString.Exclude to one side
 Jackson
 	If bidirectional, will get recursion runtime error. Add @JsonIgnore to one side		
 RepoTest
@@ -239,3 +241,5 @@ RepoTest
 h2 vs MySql
 	https://medium.com/@skywalkerhunter/quick-tip-use-concat-in-your-h2-mysql-jpql-queries-instead-of-2b0ccef63e90
 	use concat instead of ||	
+Code coverage including generated methods
+	https://www.rainerhahnekamp.com/en/ignoring-lombok-code-in-jacoco/	

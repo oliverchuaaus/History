@@ -1,9 +1,14 @@
 package com.tougher.app.v1.repo;
 
+import static com.tougher.app.v1.repo.EmployeeRepository.hasGender;
+import static com.tougher.app.v1.repo.EmployeeRepository.hasHobby;
+import static com.tougher.app.v1.repo.EmployeeRepository.hasOccupation;
+import static com.tougher.app.v1.repo.EmployeeRepository.start;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -13,8 +18,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.tougher.app.v1.dto.criteria.EmployeeSearchCriteriaDTO;
 import com.tougher.app.v1.model.Address;
@@ -25,9 +29,6 @@ import com.tougher.app.v1.model.ProfessionalDetail;
 import com.tougher.app.v1.model.WorkDetail;
 import com.tougher.app.v1.model.enums.Gender;
 
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class EmployeeRepositoryTest {
@@ -131,29 +132,151 @@ public class EmployeeRepositoryTest {
 	}
 
 	@Test
+	public void hasFirstNameMatching() {
+		String name = "oli";
+		List<Employee> emps = repo.findAll(EmployeeRepository.hasFirstNameMatching(name));
+		assertEquals(2, emps.size());
+
+		name = "olio";
+		emps = repo.findAll(EmployeeRepository.hasFirstNameMatching(name));
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void hasLastNameMatching() {
+		String name = "HU";
+		List<Employee> emps = repo.findAll(EmployeeRepository.hasLastNameMatching(name));
+		assertEquals(2, emps.size());
+
+		name = "olio";
+		emps = repo.findAll(EmployeeRepository.hasLastNameMatching(name));
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void specHasGenders() {
+		List<Gender> genders;
+		List<Employee> emps;
+
+		genders = new ArrayList<Gender>();
+		genders.add(Gender.MALE);
+		emps = repo.findAll(EmployeeRepository.hasGenders(genders));
+		assertEquals(2, emps.size());
+
+		genders.add(Gender.FEMALE);
+		emps = repo.findAll(EmployeeRepository.hasGenders(genders));
+		assertEquals(2, emps.size());
+
+		genders.remove(0);
+		emps = repo.findAll(EmployeeRepository.hasGenders(genders));
+		assertEquals(0, emps.size());
+
+		genders.remove(0);
+		emps = repo.findAll(EmployeeRepository.hasGenders(genders));
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void specHasAll() {
+		Specification<Employee> spec;
+		List<Employee> emps;
+
+		spec = start();
+		emps = repo.findAll(spec);
+		assertEquals(3, emps.size());
+	}
+
+	@Test
+	public void specHasGender() {
+		Specification<Employee> spec;
+		List<Employee> emps;
+
+		spec = hasGender(Gender.MALE);
+		emps = repo.findAll(spec);
+		assertEquals(2, emps.size());
+
+		spec = hasGender(Gender.FEMALE);
+		emps = repo.findAll(spec);
+		assertEquals(0, emps.size());
+		spec = hasGender(null);
+		emps = repo.findAll(spec);
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void specHasOccupation() {
+		Specification<Employee> spec;
+		List<Employee> emps;
+
+		spec = hasOccupation(1L);
+		emps = repo.findAll(spec);
+		assertEquals(1, emps.size());
+
+		spec = hasOccupation(2L);
+		emps = repo.findAll(spec);
+		assertEquals(0, emps.size());
+
+		spec = hasOccupation(null);
+		emps = repo.findAll(spec);
+		assertEquals(0, emps.size());
+	}
+
+	@Test
+	public void specHasHobby() {
+		Specification<Employee> spec;
+		List<Employee> emps;
+		List<Long> hobbyList = new ArrayList<>();
+		hobbyList.add(1L);
+
+		spec = hasHobby(hobbyList);
+		emps = repo.findAll(spec);
+		assertEquals(1, emps.size());
+
+		hobbyList.clear();
+		spec = hasHobby(hobbyList);
+		emps = repo.findAll(spec);
+		assertEquals(0, emps.size());
+
+//		spec = hasHobby(null);
+//		emps = repo.findAll(spec);
+//		assertEquals(0, emps.size());
+	}
+
+	@Test
 	public void findByCriteria() {
-		EmployeeSearchCriteriaDTO criteria = new EmployeeSearchCriteriaDTO();
-		Sort sort = Sort.by(Sort.Order.desc("id"));
-		Pageable pageable = PageRequest.of(0, 20, sort);
-		Page<Employee> emps = repo.findByCriteria(criteria, pageable);
-		assertEquals(3, emps.getContent().size());
-		log.info("results: " + emps.getContent());
+		// Check at least one
+		EmployeeSearchCriteriaDTO criteria;
+		Page<Employee> result;
+		PageRequest pageable = PageRequest.of(0, 20);
 
-		pageable = PageRequest.of(0, 2);
-		emps = repo.findByCriteria(criteria, pageable);
-		List<Employee> list = emps.getContent();
-		assertEquals(2, list.size());
-		assertEquals(1, list.get(0).getId());
-		assertEquals(2, list.get(1).getId());
+		criteria = new EmployeeSearchCriteriaDTO();
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(3, result.getNumberOfElements());
+		
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setName("oli");
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(2, result.getNumberOfElements());
+		
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setName("hu");
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(2, result.getNumberOfElements());
+		
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setGender(Gender.MALE.name());
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(2, result.getNumberOfElements());
+		
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setOccupationCode(1L);
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(1, result.getNumberOfElements());
 
-		assertEquals(0, emps.getNumber());
-		assertEquals(2, emps.getTotalElements());
-		assertEquals(1, emps.getTotalPages());
-
-		pageable = PageRequest.of(1, 2);
-		emps = repo.findByCriteria(criteria, pageable);
-		assertEquals(1, emps.getContent().size());
-		log.info("results: " + emps.getContent());
+		criteria = new EmployeeSearchCriteriaDTO();
+		criteria.setHobbyList(Arrays.asList(1L));
+		result = repo.findByCriteria(criteria, pageable);
+		assertEquals(1, result.getNumberOfElements());
 	}
 
 	private Employee createMinimal() {

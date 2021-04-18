@@ -2,7 +2,8 @@ package com.tougher.app.v1.dto.ref;
 
 import lombok.Data;
 
-public @Data class HobbyDTO {
+@Data
+public class HobbyDTO {
 
 	private Long id;
 

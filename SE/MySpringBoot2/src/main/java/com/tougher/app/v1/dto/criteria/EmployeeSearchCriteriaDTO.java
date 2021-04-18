@@ -2,17 +2,18 @@ package com.tougher.app.v1.dto.criteria;
 
 import java.util.List;
 
-import com.tougher.app.v1.dto.enums.GenderDTO;
-
 import lombok.Data;
 
-public @Data class EmployeeSearchCriteriaDTO {
+@Data
+public class EmployeeSearchCriteriaDTO {
 
-	private String occupationCode;
+	private String name;
 
-	private List<String> hobbyList;
+	private Long occupationCode;
 
-	private GenderDTO gender;
+	private List<Long> hobbyList;
+
+	private String gender;
 
 	private PageableDTO pageable;
 }

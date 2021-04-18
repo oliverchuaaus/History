@@ -4,7 +4,8 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-public @Data class AddressDTO {
+@Data
+public class AddressDTO {
 	private Long id;
 	private String unitNumber;
 	private String street;
